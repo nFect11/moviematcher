@@ -9,8 +9,8 @@ export default function MovieList() {
 
 
   return (
-    <div className="">
-      <MovieCard movie={data.movies[count]} />
+    <div className="h-screen">
+      <MovieCard movie={data.movies[count]}/>
       <button onClick={() => setCount(count + 1)}>Next Movie</button>
     </div>
   );

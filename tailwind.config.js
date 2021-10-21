@@ -6,6 +6,9 @@ module.exports = {
       width: {
         "300px": "300px",
       },
+      height: {
+        "450px": "450px",
+      },
     },
   },
   variants: {

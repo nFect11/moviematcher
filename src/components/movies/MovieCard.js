@@ -1,6 +1,6 @@
 export default function MovieCard(props) {
   return (
-    <div className="relative w-300px">
+    <div className="w-300px h-450px m-auto">
       <div className="absolute">
         <h1>Test</h1>
       </div>

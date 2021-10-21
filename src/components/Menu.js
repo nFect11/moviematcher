@@ -6,6 +6,7 @@ import MovieList from "./movies/MovieList"
 
 export default function Menu() {
     const [step, changeStep] = useState(0)
+    const [config, changeConfig] = useState(true)
     
     const handlePrevious = () => {
         if(step>0){
@@ -13,6 +14,9 @@ export default function Menu() {
     }
     const handleNext = () => {
         changeStep(step + 1)
+        if(step===2){
+            changeConfig(false)
+        }
     }
     return <div className="h-1/2"><div>
         {(() => {switch(step) {
@@ -20,8 +24,10 @@ export default function Menu() {
         case 1: return <GenreSelector />;
         case 2: return <GenreSelectorHate />;
         case 3: return <MovieList />;
-        default: <div></div>}})()}</div>
-        <button className={`absolute top-10 bg-gray-400 w-28 cursor-pointer ${step===0 && 'hidden'}`} onClick={handlePrevious}>Previous</button>
-        <button className={`absolute top-10 ml-48 bg-gray-400 w-28 `} onClick={handleNext}>Next</button>
+        default: <div></div>}})()}
+        </div>
+        {config && <button className={`absolute top-10 bg-gray-400 w-28 cursor-pointer ${step===0 && 'hidden'}`} onClick={handlePrevious}>Previous</button>}
+        {config && <button className={`absolute top-10 ml-48 bg-gray-400 w-28 `} onClick={handleNext}>{step === 2 ? "Finish" : "Next"}</button>}
+        
     </div>
 }
