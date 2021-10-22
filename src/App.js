@@ -1,4 +1,3 @@
-import GenreSelector from "./components/genreSelector/GenreSelector";
 import Menu from "./components/Menu";
 
 

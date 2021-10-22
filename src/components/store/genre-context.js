@@ -3,13 +3,16 @@ import { createContext, useState } from "react";
 const GenreContext = createContext({
   loveIt: [],
   hateIt: [],
+  streamingProvider: [],
   handleLoveIt: (event) => {},
   handleHateIt: (event) => {},
+  handleStrProv: (event) => {},
 });
 
 export function GenreContextProvider(props) {
   const [loveItItems, setLoveIt] = useState([]);
   const [hateItItems, setHateIt] = useState([]);
+  const [streamingProviderItems, setStreamingProvider] = useState([]);
 
   const loveItHandler = (event) => {
     if (loveItItems.includes(event.target.name)) {
@@ -27,12 +30,21 @@ export function GenreContextProvider(props) {
       setHateIt(hateItItems.concat(event.target.name));
     }
   };
+  const strProviderHandler = (event) => {
+    if (streamingProviderItems.includes(event.target.name)) {
+        setStreamingProvider(streamingProviderItems.filter((provider) => provider !== event.target.name));
+    } else {
+        setStreamingProvider(streamingProviderItems.concat(event.target.name));
+    }
+  };
 
   const context = {
     loveIt: loveItItems,
     hateIt: hateItItems,
+    streamingProvider: streamingProviderItems,
     handleLoveIt: loveItHandler,
     handleHateIt: hateItHandler,
+    handleStrProv: strProviderHandler,
   };
   return (
     <GenreContext.Provider value={context}>

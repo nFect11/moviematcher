@@ -2,6 +2,7 @@ import { useState } from "react";
 import { RoomProvider } from "../contexts/roomContext";
 import GenreSelector from "./genreSelector/GenreSelector";
 import GenreSelectorHate from "./genreSelector/GenreSelectorHate";
+import StreamingProvider from "./genreSelector/StreamingProvider";
 import Landing from "./landing/Landing";
 import MovieList from "./movies/MovieList";
 import { RoomDisplay } from "./RoomDisplay";
@@ -31,7 +32,10 @@ export default function Menu() {
               case 2:
                 return <GenreSelectorHate />;
               case 3:
+                return <StreamingProvider />;
+              case 4:
                 return <MovieList />;
+
               default:
                 <div></div>;
             }
