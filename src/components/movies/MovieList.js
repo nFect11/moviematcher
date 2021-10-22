@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import * as data from "../../json/db.json";
 import GenreContext from "../store/genre-context";
 import MovieCard from "./MovieCard";
 

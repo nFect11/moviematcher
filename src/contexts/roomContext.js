@@ -12,7 +12,6 @@ export function RoomProvider({ children }) {
         .from("rooms")
         .select("id, users")
         .match({ id: room.id });
-      console.log(data[0]);
       setRoom(data[0]);
     },
     [room]

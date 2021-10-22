@@ -10,8 +10,9 @@ export default function Landing() {
   async function handleCreateGroup() {
     const { data } = await supabase
       .from("rooms")
-      .insert([{ users: [{ name: name, wants: [], hates: [] }] }]);
+      .insert([{ users: [{ name: name, wants: [], hates: [], hasSeen: [] }], movieScoreList: []}]);
     setRoom(data[0]);
+    console.log(data)
   }
 
   async function handleJoin() {
