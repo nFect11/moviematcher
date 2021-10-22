@@ -9,9 +9,20 @@ export default function MovieList() {
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
 
-  const loveGenreList = genreCtx.loveIt.join('|');
-  const hateGenreList = genreCtx.hateIt.join('|');
-  const watchProviders = genreCtx.streamingProvider.join('|');
+  const loveGenreList = genreCtx.loveIt.join("|");
+  const hateGenreList = genreCtx.hateIt.join("|");
+  const watchProviders = genreCtx.streamingProvider.join("|");
+
+  const [likedMovies, changeLikedMovies] = useState([]);
+  const [moviesSeen, changeMoviesSeen] = useState([]);
+
+  const handleLike = (event) => {
+    changeLikedMovies([...likedMovies, movieList.results.id]);
+    changeMoviesSeen([...moviesSeen, movieList.results.id]);
+  };
+  const handleHate = (event) => {
+    changeMoviesSeen([...moviesSeen, movieList.results.id]);
+  };
 
   useEffect(() => {
     let axios = require("axios").default;
@@ -25,7 +36,7 @@ export default function MovieList() {
         with_watch_providers: watchProviders,
         watch_region: "DE",
         page: page,
-        with_watch_monetization_types: "flatrate"
+        with_watch_monetization_types: "flatrate",
       },
     };
     axios
@@ -48,7 +59,7 @@ export default function MovieList() {
 
   return (
     <div className="h-screen">
-      <MovieCard movie={movieList.results[count]} />
+      <MovieCard loveClick={handleLike} hateClick={handleHate} movie={movieList.results[count]} />
       <button
         onClick={() => {
           if (count < movieList.results.length - 1) {

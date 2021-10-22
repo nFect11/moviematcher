@@ -8,16 +8,9 @@ import { supabase } from "../../utils/supabaseClient";
 
 export default function MovieCard(props) {
   const { room, setRoom } = useContext(RoomContext);
-  const [likedMovies, changeLikedMovies] = useState([]);
-  const [moviesSeen, changeMoviesSeen] = useState([]);
 
-  const handleLike = (event) => {
-    changeLikedMovies([...likedMovies, props.movie.id]);
-    changeMoviesSeen([...moviesSeen, props.movie.id]);
-  };
-  const handleHate = (event) => {
-    changeMoviesSeen([...moviesSeen, props.movie.id]);
-  };
+
+  
 
   function handleLikeERR() {
     const { data: prevData } = supabase
@@ -54,7 +47,7 @@ export default function MovieCard(props) {
       </div>
       <div className="grid grid-cols-3">
         <Button
-          onClick={handleHate}
+          onClick={props.hateClick}
           variant="contained"
           startIcon={<ClearIcon />}
           color="error"
@@ -65,7 +58,7 @@ export default function MovieCard(props) {
           <InfoIcon />
         </Button>
         <Button
-          onClick={handleLike}
+          onClick={handleLikeERR}
           variant="contained"
           endIcon={<DoneIcon />}
           color="success"
