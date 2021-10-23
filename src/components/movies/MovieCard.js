@@ -79,7 +79,6 @@ export default function MovieCard(props) {
             },
           ],
         })
-        .match({ id: room.id });
     }
     if (likedMovies.length !== 0) {
       pushScore();

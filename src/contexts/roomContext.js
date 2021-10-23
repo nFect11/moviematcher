@@ -4,8 +4,8 @@ import { supabase } from "../utils/supabaseClient";
 export const RoomContext = createContext();
 
 export function RoomProvider({ children }) {
-  const [room, setRoom] = useState(null);
-
+  const [room, setRoom] = useState(0);
+  const [numUsers, setNumUser] = useState(0);
   const updateRoom = useCallback(
     async function () {
       const { data } = await supabase
@@ -13,8 +13,9 @@ export function RoomProvider({ children }) {
         .select("id, users")
         .match({ id: room.id });
       setRoom(data[0]);
+      console.log(room.users);
     },
-    [room]
+    [room, numUsers]
   );
 
   useEffect(
@@ -23,12 +24,17 @@ export function RoomProvider({ children }) {
         const mySubscription = supabase
           .from("rooms:id=eq." + room.id)
           .on("UPDATE", (payload) => {
-            updateRoom();
+            console.log(payload.new.users.length);
+            if (numUsers !== payload.new.users.length) {
+                console.log("setting new users")
+              setNumUser(payload.new.users.length);
+            }
+            console.log(payload);
           })
           .subscribe();
       }
     },
-    [room, updateRoom]
+    [room, setRoom]
   );
 
   return (
