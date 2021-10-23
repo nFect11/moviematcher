@@ -4,14 +4,17 @@ const GenreContext = createContext({
   loveIt: [],
   hateIt: [],
   streamingProvider: [],
+  userId: "",
   handleLoveIt: (event) => {},
   handleHateIt: (event) => {},
   handleStrProv: (event) => {},
+  changeUserId: (event) => {},
 });
 
 export function GenreContextProvider(props) {
   const [loveItItems, setLoveIt] = useState([]);
   const [hateItItems, setHateIt] = useState([]);
+  const [userId, setUserId] = useState("")
   const [streamingProviderItems, setStreamingProvider] = useState([]);
 
   const loveItHandler = (event) => {
@@ -37,14 +40,19 @@ export function GenreContextProvider(props) {
         setStreamingProvider(streamingProviderItems.concat(event.target.name));
     }
   };
+  const userIdHandler = (event) => {
+    setUserId(event)
+  }
 
   const context = {
     loveIt: loveItItems,
     hateIt: hateItItems,
     streamingProvider: streamingProviderItems,
+    userId: userId,
     handleLoveIt: loveItHandler,
     handleHateIt: hateItHandler,
     handleStrProv: strProviderHandler,
+    changeUserId: userIdHandler, 
   };
   return (
     <GenreContext.Provider value={context}>

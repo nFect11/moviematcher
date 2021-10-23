@@ -1,16 +1,21 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RoomContext } from "../../contexts/roomContext";
 import { supabase } from "../../utils/supabaseClient";
+import GenreContext from "../store/genre-context";
 
 export default function Landing() {
-  const { room, setRoom } = useContext(RoomContext);
+  const {room, setRoom } = useContext(RoomContext);
   const [name, setName] = useState("");
   const [idToConnect, setIdToConnect] = useState();
+  const genreCtx = useContext(GenreContext);
+    useEffect(() => {
+        genreCtx.changeUserId('_' + Math.random().toString(36).substr(2, 9))
+    }, [])
 
   async function handleCreateGroup() {
     const { data } = await supabase
       .from("rooms")
-      .insert([{ users: [{ name: name, wants: [], hates: [], hasSeen: [] }], movieScoreList: []}]);
+      .insert([{ users: [{ name: name, id: genreCtx.userId }], movieScoreList: []}]);
     setRoom(data[0]);
     console.log(data)
   }
@@ -24,7 +29,7 @@ export default function Landing() {
     const { data } = await supabase
       .from("rooms")
       .update({
-        users: [...prevData[0].users, { name: name, wants: [], hates: [] }],
+        users: [...prevData[0].users, { name: name, id: genreCtx.userId }],
       })
       .match({ id: idToConnect });
     setRoom(data[0]);
