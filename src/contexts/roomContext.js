@@ -5,7 +5,6 @@ export const RoomContext = createContext();
 
 export function RoomProvider({ children }) {
   const [room, setRoom] = useState(0);
-  const [numUsers, setNumUser] = useState(0);
   const updateRoom = useCallback(
     async function () {
       const { data } = await supabase
@@ -15,7 +14,7 @@ export function RoomProvider({ children }) {
       setRoom(data[0]);
       console.log(room.users);
     },
-    [room, numUsers]
+    [room]
   );
 
   useEffect(
@@ -24,12 +23,7 @@ export function RoomProvider({ children }) {
         const mySubscription = supabase
           .from("rooms:id=eq." + room.id)
           .on("UPDATE", (payload) => {
-            console.log(payload.new.users.length);
-            if (numUsers !== payload.new.users.length) {
-                console.log("setting new users")
-              setNumUser(payload.new.users.length);
-            }
-            console.log(payload);
+            updateRoom();
           })
           .subscribe();
       }
