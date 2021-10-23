@@ -1,34 +1,15 @@
-import { createContext, useCallback, useEffect, useState } from "react";
-import { supabase } from "../utils/supabaseClient";
+import { createContext, useEffect, useState } from "react";
 
 export const RoomContext = createContext();
 
 export function RoomProvider({ children }) {
-  const [room, setRoom] = useState(0);
-  const updateRoom = useCallback(
-    async function () {
-      const { data } = await supabase
-        .from("rooms")
-        .select("id, users")
-        .match({ id: room.id });
-      setRoom(data[0]);
-      console.log(room.users);
-    },
-    [room]
-  );
+  const [room, setRoom] = useState(null);
 
   useEffect(
     function () {
-      if (room) {
-        const mySubscription = supabase
-          .from("rooms:id=eq." + room.id)
-          .on("UPDATE", (payload) => {
-            updateRoom();
-          })
-          .subscribe();
-      }
+      console.log(room);
     },
-    [room, setRoom]
+    [room]
   );
 
   return (

@@ -1,10 +1,10 @@
-import Button from "@mui/material/Button";
-import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
+import DoneIcon from "@mui/icons-material/Done";
 import InfoIcon from "@mui/icons-material/Info";
+import Button from "@mui/material/Button";
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../../utils/supabaseClient";
 import { RoomContext } from "../../contexts/roomContext";
+import { supabase } from "../../utils/supabaseClient";
 import GenreContext from "../store/genre-context";
 
 export default function MovieCard(props) {
@@ -21,11 +21,10 @@ export default function MovieCard(props) {
   const handleLike = (event) => {
     changeLikedMovies([...likedMovies, event.target.name]);
     changeMoviesSeen([...moviesSeen, event.target.name]);
-    if (count + 3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                === 0 && count !== 0) {
+    if (count + 3 === 0 && count !== 0) {
       setPage(page + 1);
     }
     setCount(count + 1);
-    console.log(movieList);
   };
   const handleHate = (event) => {
     changeMoviesSeen([...moviesSeen, event.target.name]);
@@ -68,17 +67,15 @@ export default function MovieCard(props) {
         .select("movieScoreList")
         .match({ id: room.id });
 
-      const { data } = await supabase
-        .from("rooms")
-        .update({
-          movieScoreList: [
-            ...prevData[0].movieScoreList,
-            {
-              movieId: likedMovies[likedMovies.length - 1],
-              voter: genreCtx.userId,
-            },
-          ],
-        })
+      const { data } = await supabase.from("rooms").update({
+        movieScoreList: [
+          ...prevData[0].movieScoreList,
+          {
+            movieId: likedMovies[likedMovies.length - 1],
+            voter: genreCtx.userId,
+          },
+        ],
+      });
     }
     if (likedMovies.length !== 0) {
       pushScore();

@@ -4,20 +4,42 @@ import { supabase } from "../../utils/supabaseClient";
 import GenreContext from "../store/genre-context";
 
 export default function Landing() {
-  const {room, setRoom } = useContext(RoomContext);
+  const { setRoom } = useContext(RoomContext);
   const [name, setName] = useState("");
   const [idToConnect, setIdToConnect] = useState();
   const genreCtx = useContext(GenreContext);
-    useEffect(() => {
-        genreCtx.changeUserId('_' + Math.random().toString(36).substr(2, 9))
-    }, [])
+
+  useEffect(() => {
+    genreCtx.changeUserId("_" + Math.random().toString(36).substr(2, 9));
+  }, []);
+
+  function connect(id) {
+    supabase
+      .from("rooms:id=eq." + id)
+      .on("UPDATE", (payload) => {
+        async function updateRoom() {
+          const { data: data1 } = await supabase
+            .from("rooms")
+            .select("*")
+            .match({ id: id });
+
+          setRoom(data1[0]);
+        }
+        updateRoom();
+      })
+      .subscribe();
+  }
 
   async function handleCreateGroup() {
     const { data } = await supabase
       .from("rooms")
-      .insert([{ users: [{ name: name, id: genreCtx.userId }], movieScoreList: []}]);
+      .insert([
+        { users: [{ name: name, id: genreCtx.userId }], movieScoreList: [] },
+      ]);
+
     setRoom(data[0]);
-    console.log(data)
+
+    connect(data[0].id);
   }
 
   async function handleJoin() {
@@ -33,6 +55,8 @@ export default function Landing() {
       })
       .match({ id: idToConnect });
     setRoom(data[0]);
+
+    connect(idToConnect);
   }
 
   return (
