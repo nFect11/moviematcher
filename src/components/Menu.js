@@ -11,7 +11,7 @@ export default function Menu() {
   const [step, changeStep] = useState(0);
 
   const handlePrevious = () => {
-    if (step > 0) {
+    if (step > 1) {
       changeStep(step - 1);
     }
   };
@@ -26,7 +26,7 @@ export default function Menu() {
           {(() => {
             switch (step) {
               case 0:
-                return <Landing />;
+                return <Landing start={handleNext}/>;
               case 1:
                 return <GenreSelector />;
               case 2:
@@ -44,14 +44,16 @@ export default function Menu() {
         </div>
         <button
           className={`absolute top-10 bg-gray-400 w-28 cursor-pointer ${
-            step === 0 && "hidden"
+            step <= 1 && "hidden"
           }`}
           onClick={handlePrevious}
         >
           Previous
         </button>
         <button
-          className={`absolute top-10 ml-48 bg-gray-400 w-28 `}
+          className={`absolute top-10 ml-48 bg-gray-400 w-28 ${
+            step === 0 && "hidden"
+          }`}
           onClick={handleNext}
         >
           Next

@@ -19,22 +19,23 @@ export default function MovieCard(props) {
   const [count, setCount] = useState(0);
 
   const handleLike = (event) => {
-    changeLikedMovies([...likedMovies, event.target.name]);
-    changeMoviesSeen([...moviesSeen, event.target.name]);
-    if (count + 3 === 0 && count !== 0) {
+    changeLikedMovies([...likedMovies, movieList[count].id]);
+    changeMoviesSeen([...moviesSeen, movieList[count].id]);
+    if (count % 18 === 0 && count !== 0) {
       setPage(page + 1);
     }
     setCount(count + 1);
   };
   const handleHate = (event) => {
-    changeMoviesSeen([...moviesSeen, event.target.name]);
+    changeMoviesSeen([...moviesSeen, movieList[count].id]);
     if (count % 18 === 0 && count !== 0) {
       setPage(page + 1);
     }
     setCount(count + 1);
   };
 
-  useEffect(() => {
+  const fetchNewMovies = () => {
+    console.log("Fetching movies...");
     let axios = require("axios").default;
     let options = {
       method: "GET",
@@ -58,6 +59,10 @@ export default function MovieCard(props) {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  useEffect(() => {
+    fetchNewMovies();
   }, [page]);
 
   useEffect(() => {

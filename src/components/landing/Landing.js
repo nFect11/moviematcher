@@ -1,12 +1,13 @@
+import { getThemeProps } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import { RoomContext } from "../../contexts/roomContext";
 import { supabase } from "../../utils/supabaseClient";
 import GenreContext from "../store/genre-context";
 
-export default function Landing() {
+export default function Landing(props) {
   const { setRoom } = useContext(RoomContext);
   const [name, setName] = useState("");
-  const [idToConnect, setIdToConnect] = useState();
+  const [idToConnect, setIdToConnect] = useState(null);
   const genreCtx = useContext(GenreContext);
 
   useEffect(() => {
@@ -40,6 +41,7 @@ export default function Landing() {
     setRoom(data[0]);
 
     connect(data[0].id);
+    props.start();
   }
 
   async function handleJoin() {
@@ -57,6 +59,7 @@ export default function Landing() {
     setRoom(data[0]);
 
     connect(idToConnect);
+    props.start();
   }
 
   return (
@@ -84,6 +87,7 @@ export default function Landing() {
         </h1>
       </div>
       <div className="mt-3 text-center">
+          
         <input
           type="number"
           value={idToConnect}
@@ -93,7 +97,7 @@ export default function Landing() {
           onClick={handleJoin}
           className="font-semibold text-white bg-green-500 rounded"
         >
-          Join{" "}
+          Join
         </button>
       </div>
     </div>
