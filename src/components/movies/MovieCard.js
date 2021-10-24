@@ -8,31 +8,49 @@ import { supabase } from "../../utils/supabaseClient";
 import GenreContext from "../store/genre-context";
 
 export default function MovieCard(props) {
+  // Context
   const { room, setRoom } = useContext(RoomContext);
+  const genreCtx = useContext(GenreContext);
+  //State
   const [likedMovies, changeLikedMovies] = useState([]);
   const [moviesSeen, changeMoviesSeen] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const genreCtx = useContext(GenreContext);
+  const [scoreList, setScoreList] = useState([]);
+  const [movieScores, setMovieScores] = useState([])
 
   const [count, setCount] = useState(0);
 
   const handleLike = (event) => {
     changeLikedMovies([...likedMovies, movieList[count].id]);
     changeMoviesSeen([...moviesSeen, movieList[count].id]);
-    if (count % 18 === 0 && count !== 0) {
+    if (count % 5 === 0 && count !== 0) {
       setPage(page + 1);
     }
     setCount(count + 1);
   };
   const handleHate = (event) => {
     changeMoviesSeen([...moviesSeen, movieList[count].id]);
-    if (count % 18 === 0 && count !== 0) {
+    if (count % 5 === 0 && count !== 0) {
       setPage(page + 1);
     }
     setCount(count + 1);
   };
+
+  const getScoreList = async () => {
+    const { data } = await supabase
+      .from("rooms")
+      .select("movieScoreList")
+      .match({ id: room.id });
+    setScoreList(data[0].movieScoreList);
+  };
+
+  useEffect(() => {
+    console.log(scoreList)
+    const tempScores = []
+    
+  }, [scoreList])
 
   const fetchNewMovies = () => {
     console.log("Fetching movies...");
@@ -63,6 +81,7 @@ export default function MovieCard(props) {
 
   useEffect(() => {
     fetchNewMovies();
+    getScoreList();
   }, [page]);
 
   useEffect(() => {
