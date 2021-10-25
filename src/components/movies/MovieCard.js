@@ -18,24 +18,60 @@ export default function MovieCard(props) {
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [scoreList, setScoreList] = useState([]);
-  const [movieScores, setMovieScores] = useState([])
+  const [movieScores, setMovieScores] = useState([]);
 
   const [count, setCount] = useState(0);
 
   const handleLike = (event) => {
-    changeLikedMovies([...likedMovies, movieList[count].id]);
+    let skipSeenMovies = 1;
+    let flag = true;
+    changeLikedMovies([
+      ...likedMovies,
+      { id: movieList[count].id, poster_path: movieList[count].poster_path },
+    ]);
     changeMoviesSeen([...moviesSeen, movieList[count].id]);
-    if (count % 5 === 0 && count !== 0) {
+    console.log(movieList.length, count);
+    if (movieList.length - count < 5 && count !== 0) {
       setPage(page + 1);
     }
-    setCount(count + 1);
+    while (flag) {
+      if (movieList.length < count + skipSeenMovies) {
+        return;
+      }
+      if (movieList[count + skipSeenMovies].voter === genreCtx.userId) {
+        skipSeenMovies++;
+        continue;
+      }
+      if (moviesSeen.includes(movieList[count + skipSeenMovies].id)) {
+        skipSeenMovies++;
+      } else {
+        flag = false;
+      }
+    }
+    setCount(count + skipSeenMovies);
   };
   const handleHate = (event) => {
+    let flag = true;
+    let skipSeenMovies = 1;
     changeMoviesSeen([...moviesSeen, movieList[count].id]);
-    if (count % 5 === 0 && count !== 0) {
+    if (movieList.length - count < 5 && count !== 0) {
       setPage(page + 1);
     }
-    setCount(count + 1);
+    while (flag) {
+      if (movieList.length < count + skipSeenMovies) {
+        return;
+      }
+      if (movieList[count + skipSeenMovies].voter === genreCtx.userId) {
+        skipSeenMovies++;
+        continue;
+      }
+      if (moviesSeen.includes(movieList[count + skipSeenMovies].id)) {
+        skipSeenMovies++;
+      } else {
+        flag = false;
+      }
+    }
+    setCount(count + skipSeenMovies);
   };
 
   const getScoreList = async () => {
@@ -47,10 +83,25 @@ export default function MovieCard(props) {
   };
 
   useEffect(() => {
-    console.log(scoreList)
-    const tempScores = []
-    
-  }, [scoreList])
+    let tempScores = [];
+    let counter = 0;
+    let flag = false;
+    scoreList.forEach((x) => {
+      tempScores.forEach((property) => {
+        if (property.id === x.id && !flag && tempScores !== []) {
+          tempScores[counter].votes = tempScores[counter].votes + 1;
+          counter = 0;
+          flag = true;
+        }
+        counter++;
+      });
+      counter = 0;
+      !flag &&
+        tempScores.push({ id: x.id, votes: 1, poster_path: x.poster_path });
+      flag = false;
+    });
+    setMovieScores(tempScores);
+  }, [scoreList]);
 
   const fetchNewMovies = () => {
     console.log("Fetching movies...");
@@ -77,6 +128,14 @@ export default function MovieCard(props) {
       .catch((error) => {
         console.error(error);
       });
+    async function fetchLikedMovies() {
+      const { data } = await supabase
+        .from("rooms")
+        .select("movieScoreList")
+        .match({ id: room.id });
+      setMovieList([...movieList, data]);
+    }
+    fetchLikedMovies();
   };
 
   useEffect(() => {
@@ -95,7 +154,8 @@ export default function MovieCard(props) {
         movieScoreList: [
           ...prevData[0].movieScoreList,
           {
-            movieId: likedMovies[likedMovies.length - 1],
+            id: likedMovies[likedMovies.length - 1].id,
+            poster_path: likedMovies[likedMovies.length - 1].poster_path,
             voter: genreCtx.userId,
           },
         ],
@@ -111,36 +171,55 @@ export default function MovieCard(props) {
     return <div>Loading...</div>;
   }
   return (
-    <div className="w-1/5 mx-auto pt-52">
-      <div>
-        <img
-          className="rounded"
-          src={`${imgPath}${movieList[count].poster_path}`}
-          alt={movieList[count].title}
-        />
+    <div className="grid grid-cols-3">
+      <div></div>
+      <div className="w-3/4 mx-auto pt-24">
+        <div>
+          <img
+            className="rounded"
+            src={`${imgPath}${movieList[count].poster_path}`}
+            alt={movieList[count].title}
+          />
+        </div>
+        <div className="grid grid-cols-3">
+          <Button
+            name={movieList[count].id}
+            onClick={handleHate}
+            variant="contained"
+            startIcon={<ClearIcon />}
+            color="error"
+          >
+            Hate
+          </Button>
+          <Button variant="contained">
+            <InfoIcon />
+          </Button>
+          <Button
+            name={movieList[count].id}
+            onClick={handleLike}
+            variant="contained"
+            endIcon={<DoneIcon />}
+            color="success"
+          >
+            Like
+          </Button>
+        </div>
       </div>
-      <div className="grid grid-cols-3">
-        <Button
-          name={movieList[count].id}
-          onClick={handleHate}
-          variant="contained"
-          startIcon={<ClearIcon />}
-          color="error"
-        >
-          Hate
-        </Button>
-        <Button variant="contained">
-          <InfoIcon />
-        </Button>
-        <Button
-          name={movieList[count].id}
-          onClick={handleLike}
-          variant="contained"
-          endIcon={<DoneIcon />}
-          color="success"
-        >
-          Like
-        </Button>
+      <div className="w-1/2 mx-auto pt-24">
+        <ul className="grid grid-cols-3">
+          {movieScores.map((x) => {
+            return (
+              <li>
+                <img
+                  className="w-24"
+                  src={`${imgPath}${x.poster_path}`}
+                  alt={x.id}
+                />
+                : {x.votes}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );
