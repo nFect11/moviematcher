@@ -17,17 +17,11 @@ export default function MovieCard(props) {
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [scoreList, setScoreList] = useState([]);
-  const [movieScores, setMovieScores] = useState([]);
 
   const [currentMovie, setCurrentMovie] = useState({});
 
-  // Discover API Call, Liste an Filmen maximal 20 lang, mit 20 pro Page
-  // Liked movie wird Datenbank gepusht mit ID, Voter
-  //Liked Movie Liste
-
   function getNextMovie() {
-    for (let i = 0; i < room.movieScoreList.lenght; i++) {
+    for (let i = 0; i < room.movieScoreList.length; i++) {
       if (!moviesSeen.includes(room.movieScoreList[i].id)) {
         let axios = require("axios").default;
         let options = {
@@ -37,7 +31,7 @@ export default function MovieCard(props) {
         axios
           .request(options)
           .then((response) => {
-            setCurrentMovie(response);
+            setCurrentMovie(response.data);
             setLoading(false);
           })
           .catch((error) => {
@@ -54,7 +48,7 @@ export default function MovieCard(props) {
         return;
       }
     }
-    setPage(page + 1);
+    fetchNewMovies(page);
   }
 
   const handleLike = async (event) => {
@@ -69,7 +63,7 @@ export default function MovieCard(props) {
       .select("movieScoreList")
       .match({ id: room.id });
 
-    const { data } = await supabase
+    await supabase
       .from("rooms")
       .update({
         movieScoreList: [
@@ -82,37 +76,21 @@ export default function MovieCard(props) {
         ],
       })
       .match({ id: room.id });
-
-    getNextMovie();
   };
 
   const handleHate = (event) => {
     changeMoviesSeen([...moviesSeen, currentMovie.id]);
-    getNextMovie();
   };
 
-  useEffect(() => {
-    let tempScores = [];
-    let counter = 0;
-    let flag = false;
-    scoreList.forEach((x) => {
-      tempScores.forEach((property) => {
-        if (property.id === x.id && !flag && tempScores !== []) {
-          tempScores[counter].votes = tempScores[counter].votes + 1;
-          counter = 0;
-          flag = true;
-        }
-        counter++;
-      });
-      counter = 0;
-      !flag &&
-        tempScores.push({ id: x.id, votes: 1, poster_path: x.poster_path });
-      flag = false;
-    });
-    setMovieScores(tempScores);
-  }, [scoreList]);
+  useEffect(
+    function () {
+      getNextMovie();
+    },
+    [moviesSeen]
+  );
 
-  const fetchNewMovies = () => {
+  const fetchNewMovies = (pageToFetch) => {
+    setPage(page + 1);
     let axios = require("axios").default;
     let options = {
       method: "GET",
@@ -123,7 +101,7 @@ export default function MovieCard(props) {
         without_genres: genreCtx.hateIt.join("|"),
         with_watch_providers: genreCtx.streamingProvider.join("|"),
         watch_region: "DE",
-        page: page,
+        page: pageToFetch,
         with_watch_monetization_types: "flatrate",
       },
     };
@@ -131,6 +109,7 @@ export default function MovieCard(props) {
       .request(options)
       .then((response) => {
         setMovieList([...response.data.results]);
+        setCurrentMovie(response.data.results[0]);
         setLoading(false);
       })
       .catch((error) => {
@@ -139,12 +118,8 @@ export default function MovieCard(props) {
   };
 
   useEffect(() => {
-    async function handlePageUpdate() {
-      await fetchNewMovies();
-      getNextMovie();
-    }
-    handlePageUpdate();
-  }, [page, fetchNewMovies]);
+    fetchNewMovies(page);
+  }, []);
 
   const imgPath = "https://image.tmdb.org/t/p/original";
   if (isLoading || movieList.length === 0) {
@@ -182,22 +157,6 @@ export default function MovieCard(props) {
             Like
           </Button>
         </div>
-      </div>
-      <div className="w-1/2 mx-auto mt-24">
-        <ul className="grid grid-cols-3">
-          {movieScores.map((x) => {
-            return (
-              <li>
-                <img
-                  className="w-24"
-                  src={`${imgPath}${x.poster_path}`}
-                  alt={x.id}
-                />
-                : {x.votes}
-              </li>
-            );
-          })}
-        </ul>
       </div>
     </div>
   );
