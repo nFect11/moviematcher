@@ -20,7 +20,7 @@ export default function MovieCard(props) {
 
   const [currentMovie, setCurrentMovie] = useState({});
 
-  //Randomize movie list array to prevent showing the same order of movies and mix in movies from others
+  //Randomize movie list array to prevent showing the same order of movies and mix in movies from other users
   function shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
@@ -39,42 +39,6 @@ export default function MovieCard(props) {
     }
 
     return array;
-  }
-
-  async function fetchNewMoviesFromDatabase() {
-    let unseenIds = [];
-    let singleFetchedMovies = [];
-    const { data } = await supabase
-      .from("rooms")
-      .select("movieScoreList")
-      .match({ id: room.id });
-      console.log(data)
-    for (let i=0; i < data.length;i++){
-      if(!moviesSeen.includes(data[i].id)){
-        unseenIds.push(data[i].id)
-      }
-    }
-    changeMoviesSeen([...moviesSeen, ...unseenIds]);
-    for (let j = 0; j < unseenIds.length; j++){
-      let axios = require("axios").default;
-        let options = {
-          method: "GET",
-          url: `https://api.themoviedb.org/3/movie/${unseenIds[j]}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`,
-        };
-        axios
-          .request(options)
-          .then((response) => {
-            console.log("Singled Fetched Movies Data: ", data)
-            singleFetchedMovies.push(response)
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-    }
-  }
-
-  async function fetchMoviesFromAPI() {
-    return <div></div>
   }
 
   function getNextMovie() {
@@ -119,7 +83,7 @@ export default function MovieCard(props) {
       .from("rooms")
       .select("movieScoreList")
       .match({ id: room.id });
-    console.log("PrevData: ", prevData)
+
     await supabase
       .from("rooms")
       .update({
@@ -147,6 +111,7 @@ export default function MovieCard(props) {
   );
 
   const fetchNewMovies = (pageToFetch) => {
+    let tempMoviesList = [];
     setPage(page + 1);
     let axios = require("axios").default;
     let options = {
@@ -165,8 +130,9 @@ export default function MovieCard(props) {
     axios
       .request(options)
       .then((response) => {
-        setMovieList([...response.data.results]);
-        setCurrentMovie(response.data.results[0]);
+        tempMoviesList = shuffle([...response.data.results]);
+        setMovieList(tempMoviesList);
+        setCurrentMovie(tempMoviesList[0]);
         setLoading(false);
       })
       .catch((error) => {
@@ -202,7 +168,7 @@ export default function MovieCard(props) {
           >
             Hate
           </Button>
-          <Button variant="contained" onClick={fetchNewMoviesFromDatabase}>
+          <Button variant="contained">
             <InfoIcon />
           </Button>
           <Button
@@ -213,7 +179,6 @@ export default function MovieCard(props) {
           >
             Like
           </Button>
-          <Button onClick={fetchNewMoviesFromDatabase}>Fetch Liked Movies</Button>
         </div>
       </div>
     </div>

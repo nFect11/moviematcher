@@ -8,6 +8,13 @@ export function RoomDisplay() {
   const { room } = useContext(RoomContext);
   const genreCtx = useContext(GenreContext);
 
+    const [username, changeUsername] = useState("")
+  useEffect(() => { 
+    for (let i = 0; i < room?.users.length; i++) {
+      if (genreCtx.userId === room?.users[i].id) changeUsername(room?.users[i].name);
+    }
+  },[room?.users])
+
   function voterList(votedMovie) {
     let nameList = "";
     votedMovie.voter.forEach((voterName) => {
@@ -55,7 +62,7 @@ export function RoomDisplay() {
         movieswithVoteCounts.push({
           id: movies[i].id,
           img: movies[i].poster_path,
-          voter: [genreCtx.userId],
+          voter: [movies[i].voter],
         });
     }
     movieswithVoteCounts.sort((a, b) =>
@@ -74,6 +81,7 @@ export function RoomDisplay() {
   } else {
     return (
       <div className="absolute top-0 right-0 font-bold text-white mt-36 mr-36 w-1/5">
+        <div>Username: {username}</div>
         <div>Room: {room?.id}</div>
         <div>Users: </div>
 
