@@ -20,6 +20,63 @@ export default function MovieCard(props) {
 
   const [currentMovie, setCurrentMovie] = useState({});
 
+  //Randomize movie list array to prevent showing the same order of movies and mix in movies from others
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    return array;
+  }
+
+  async function fetchNewMoviesFromDatabase() {
+    let unseenIds = [];
+    let singleFetchedMovies = [];
+    const { data } = await supabase
+      .from("rooms")
+      .select("movieScoreList")
+      .match({ id: room.id });
+      console.log(data)
+    for (let i=0; i < data.length;i++){
+      if(!moviesSeen.includes(data[i].id)){
+        unseenIds.push(data[i].id)
+      }
+    }
+    changeMoviesSeen([...moviesSeen, ...unseenIds]);
+    for (let j = 0; j < unseenIds.length; j++){
+      let axios = require("axios").default;
+        let options = {
+          method: "GET",
+          url: `https://api.themoviedb.org/3/movie/${unseenIds[j]}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`,
+        };
+        axios
+          .request(options)
+          .then((response) => {
+            console.log("Singled Fetched Movies Data: ", data)
+            singleFetchedMovies.push(response)
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+    }
+  }
+
+  async function fetchMoviesFromAPI() {
+    return <div></div>
+  }
+
   function getNextMovie() {
     for (let i = 0; i < room.movieScoreList.length; i++) {
       if (!moviesSeen.includes(room.movieScoreList[i].id)) {
@@ -62,7 +119,7 @@ export default function MovieCard(props) {
       .from("rooms")
       .select("movieScoreList")
       .match({ id: room.id });
-
+    console.log("PrevData: ", prevData)
     await supabase
       .from("rooms")
       .update({
@@ -145,7 +202,7 @@ export default function MovieCard(props) {
           >
             Hate
           </Button>
-          <Button variant="contained">
+          <Button variant="contained" onClick={fetchNewMoviesFromDatabase}>
             <InfoIcon />
           </Button>
           <Button
@@ -156,6 +213,7 @@ export default function MovieCard(props) {
           >
             Like
           </Button>
+          <Button onClick={fetchNewMoviesFromDatabase}>Fetch Liked Movies</Button>
         </div>
       </div>
     </div>
