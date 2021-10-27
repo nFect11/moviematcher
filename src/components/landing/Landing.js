@@ -68,15 +68,13 @@ export default function Landing(props) {
         <h1 className="text-xl text-center text-white">
           Invite your friend to a group
         </h1>
-        <h1 className="text-xl text-center text-white">
-          or browse for yourself
-        </h1>
       </div>
       <div className="mt-3 text-center ">
         <input value={name} onChange={(e) => setName(e.target.value)} />
         <button
           onClick={handleCreateGroup}
-          className="font-semibold text-white bg-green-500 rounded"
+          disabled={name === ""}
+          className={`font-semibold text-white bg-green-500 rounded ${name === "" && "cursor-not-allowed"}`}
         >
           Click to create a group
         </button>
@@ -95,7 +93,8 @@ export default function Landing(props) {
         />
         <button
           onClick={handleJoin}
-          className="font-semibold text-white bg-green-500 rounded"
+          disabled={idToConnect === null}
+          className={`font-semibold text-white bg-green-500 rounded ${idToConnect === null && "cursor-not-allowed"}`}
         >
           Join
         </button>

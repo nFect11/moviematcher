@@ -17,7 +17,7 @@ export function RoomDisplay() {
 
   function voterList(votedMovie) {
     let nameList = "";
-    votedMovie.voter.forEach((voterName) => {
+    votedMovie.votes.forEach((voterName) => {
       for (let i = 0; i < room?.users.length; i++) {
         if (voterName === room?.users[i].id) {
           nameList += `${room?.users[i].name}<br />`;
@@ -28,53 +28,37 @@ export function RoomDisplay() {
   }
   useEffect(() => {
     ReactTooltip.rebuild();
-  });
+  },[room?.movieScoreList]);
 
   function getListWithVoteCounts(movies) {
     if (!movies) return [];
-    let existsFlag = false;
     let movieswithVoteCounts = [];
 
-    //for (let i = 0; i < movies.length; i++) {
-    //  if (movieswithVoteCounts.hasOwnProperty(movies[i].id)) {
-    //    movieswithVoteCounts[movies[i].id]["votes"] =
-    //      movieswithVoteCounts[movies[i].id]["votes"] + 1;
-    //  } else {
-    //    movieswithVoteCounts[movies[i].id] = {
-    //      votes: 1,
-    //      img: movies[i].poster_path,
-    //    };
-    //  }
-    //}
-
-    for (let i = 0; i < movies.length; i++) {
-      existsFlag = false;
+    outerLoop: for (let i = 0; i < movies.length; i++) {
       for (let j = 0; j < movieswithVoteCounts.length; j++) {
-        if (movieswithVoteCounts[j].id === movies[i].id) {
-          if (!movieswithVoteCounts[j].voter.includes(movies[i].voter)) {
-            movieswithVoteCounts[j].voter.push(movies[i].voter);
-          }
-          existsFlag = true;
-          break;
+        if (movieswithVoteCounts[j]["movie"] === movies[i].id) {
+          movieswithVoteCounts[j]["votes"].push(movies[i].voter);
+          continue outerLoop;
         }
       }
-      !existsFlag &&
-        movieswithVoteCounts.push({
-          id: movies[i].id,
-          img: movies[i].poster_path,
-          voter: [movies[i].voter],
-        });
+
+      movieswithVoteCounts.push({
+        movie: movies[i].id,
+        votes: [movies[i].voter],
+        img: movies[i].poster_path,
+      });
     }
-    movieswithVoteCounts.sort((a, b) =>
-      a.voter.length > b.voter.length
-        ? 1
-        : b.voter.length > a.voter.length
-        ? -1
-        : 0
-    );
-    movieswithVoteCounts.reverse();
+
+    movieswithVoteCounts.sort(function (a, b) {
+      if (a["votes"].length < b["votes"].length) return 1;
+      if (a["votes"].length > b["votes"].length) return -1;
+      return 0;
+    });
+
+
     return movieswithVoteCounts;
   }
+
   const imgPath = "https://image.tmdb.org/t/p/original";
   if (room === 0) {
     return <div></div>;
@@ -103,7 +87,7 @@ export function RoomDisplay() {
                   alt={"alt"}
                 />
               </button>
-              <div>{movie.voter.length}</div>
+              <div>{movie.votes.length}</div>
             </div>
           ))}
           <ReactTooltip
