@@ -91,6 +91,7 @@ export default function MovieCard(props) {
           ...prevData[0].movieScoreList,
           {
             id: currentMovie.id,
+            title: currentMovie.title,
             poster_path: currentMovie.poster_path,
             voter: genreCtx.userId,
           },

@@ -46,6 +46,7 @@ export function RoomDisplay() {
         movie: movies[i].id,
         votes: [movies[i].voter],
         img: movies[i].poster_path,
+        title: movies[i].title,
       });
     }
 
@@ -78,7 +79,7 @@ export function RoomDisplay() {
             <div key={index}>
               <button
                 data-for="main"
-                data-tip={voterList(movie)}
+                data-tip={`${movie.title}<br />${voterList(movie)}`}
                 data-iscapture="true"
               >
                 <img
