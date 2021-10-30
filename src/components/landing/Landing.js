@@ -5,6 +5,8 @@ import { supabase } from "../../utils/supabaseClient";
 import GenreContext from "../store/genre-context";
 
 export default function Landing(props) {
+  const letters = /^[A-Za-z]+$/;
+
   const { setRoom } = useContext(RoomContext);
   const [name, setName] = useState("");
   const [idToConnect, setIdToConnect] = useState(null);
@@ -32,11 +34,21 @@ export default function Landing(props) {
   }
 
   async function handleCreateGroup() {
-    const { data } = await supabase
-      .from("rooms")
-      .insert([
-        { users: [{ name: name, id: genreCtx.userId }], movieScoreList: [] },
-      ]);
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let randomStr = "";
+
+    for (let i = 0; i < 4; i++) {
+      const randomNum = Math.floor(Math.random() * characters.length);
+      randomStr += characters[randomNum];
+    }
+
+    const { data } = await supabase.from("rooms").insert([
+      {
+        uniqueRoom: randomStr,
+        users: [{ name: name, id: genreCtx.userId }],
+        movieScoreList: [],
+      },
+    ]);
 
     setRoom(data[0]);
 
@@ -47,18 +59,18 @@ export default function Landing(props) {
   async function handleJoin() {
     const { data: prevData } = await supabase
       .from("rooms")
-      .select("users")
-      .match({ id: idToConnect });
+      .select("id, users")
+      .match({ uniqueRoom: idToConnect });
 
     const { data } = await supabase
       .from("rooms")
       .update({
         users: [...prevData[0].users, { name: name, id: genreCtx.userId }],
       })
-      .match({ id: idToConnect });
+      .match({ uniqueRoom: idToConnect });
     setRoom(data[0]);
 
-    connect(idToConnect);
+    connect(prevData[0].id);
     props.start();
   }
 
@@ -69,12 +81,15 @@ export default function Landing(props) {
           Invite your friend to a group
         </h1>
       </div>
+ 
       <div className="mt-3 text-center ">
         <input value={name} onChange={(e) => setName(e.target.value)} />
         <button
           onClick={handleCreateGroup}
           disabled={name === ""}
-          className={`font-semibold text-white bg-green-500 rounded ${name === "" && "cursor-not-allowed"}`}
+          className={`font-semibold text-white bg-green-500 rounded ${
+            name === "" && "cursor-not-allowed"
+          }`}
         >
           Click to create a group
         </button>
@@ -85,20 +100,24 @@ export default function Landing(props) {
         </h1>
       </div>
       <div className="mt-3 text-center">
-          
         <input
-          type="number"
+          type="text"
           value={idToConnect}
-          onChange={(e) => setIdToConnect(e.target.value)}
+          onChange={(e) => {
+            setIdToConnect(e.target.value.toUpperCase());
+          }}
         />
         <button
           onClick={handleJoin}
-          disabled={idToConnect === null}
-          className={`font-semibold text-white bg-green-500 rounded ${idToConnect === null && "cursor-not-allowed"}`}
+          disabled={idToConnect === null || name === ""}
+          className={`font-semibold text-white bg-green-500 rounded ${
+            (idToConnect === null || name === "") && "cursor-not-allowed"
+          }`}
         >
           Join
         </button>
       </div>
+  
     </div>
   );
 }

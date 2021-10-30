@@ -8,6 +8,13 @@ module.exports = {
       },
       height: {
         "450px": "450px",
+        "1000px": "1000px",
+      },
+      maxHeight: {
+        "192": "48rem",
+      },
+      minHeight: {
+        "192": "48rem",
       },
     },
   },

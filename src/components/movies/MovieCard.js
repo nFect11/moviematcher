@@ -106,7 +106,9 @@ export default function MovieCard(props) {
 
   useEffect(
     function () {
-      getNextMovie();
+      if (!isLoading) {
+        getNextMovie();
+      }
     },
     [moviesSeen]
   );
@@ -152,15 +154,15 @@ export default function MovieCard(props) {
   return (
     <div className="grid grid-cols-3">
       <div></div>
-      <div className="w-3/4 mx-auto mt-24 shadow-lg">
-        <div>
-          <img
-            className="rounded"
-            src={`${imgPath}${currentMovie.poster_path}`}
-            alt={currentMovie.title}
-          />
+      <div className="mt-24 shadow-lg">
+        <div className="relative w-3/4 mx-auto">
+            <img
+              className="rounded lg:h-1000px"
+              src={`${imgPath}${currentMovie.poster_path}`}
+              alt={currentMovie.title}
+            />
         </div>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-3 object-bottom text-lg">
           <Button
             onClick={handleHate}
             variant="contained"
