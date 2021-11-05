@@ -5,7 +5,6 @@ import { supabase } from "../../utils/supabaseClient";
 import GenreContext from "../store/genre-context";
 
 export default function Landing(props) {
-  const letters = /^[A-Za-z]+$/;
 
   const { setRoom } = useContext(RoomContext);
   const [name, setName] = useState("");
@@ -75,49 +74,44 @@ export default function Landing(props) {
   }
 
   return (
-    <div className="h-screen bg-gray-800">
-      <div className="pt-64">
-        <h1 className="text-xl text-center text-white">
-          Invite your friend to a group
-        </h1>
+    <div className="h-screen relative flex">
+      <div className="w-1/3 h-1/2 mx-auto my-auto rounded-lg bg-gray-100 shadow-lg">
+        <div className="mt-3 text-center ">
+          <input value={name} onChange={(e) => setName(e.target.value)} />
+          <button
+            onClick={handleCreateGroup}
+            disabled={name === ""}
+            className={`font-semibold text-white bg-green-500 rounded ${
+              name === "" && "cursor-not-allowed"
+            }`}
+          >
+            Click to create a group
+          </button>
+        </div>
+        <div className="mt-3 text-center">
+          <h1 className="text-xl text-center text-white">
+            Or enter a code to join a group
+          </h1>
+        </div>
+        <div className="mt-3 text-center">
+          <input
+            type="text"
+            value={idToConnect}
+            onChange={(e) => {
+              setIdToConnect(e.target.value.toUpperCase());
+            }}
+          />
+          <button
+            onClick={handleJoin}
+            disabled={idToConnect === null || name === ""}
+            className={`font-semibold text-white bg-green-500 rounded ${
+              (idToConnect === null || name === "") && "cursor-not-allowed"
+            }`}
+          >
+            Join
+          </button>
+        </div>
       </div>
- 
-      <div className="mt-3 text-center ">
-        <input value={name} onChange={(e) => setName(e.target.value)} />
-        <button
-          onClick={handleCreateGroup}
-          disabled={name === ""}
-          className={`font-semibold text-white bg-green-500 rounded ${
-            name === "" && "cursor-not-allowed"
-          }`}
-        >
-          Click to create a group
-        </button>
-      </div>
-      <div className="mt-3 text-center">
-        <h1 className="text-xl text-center text-white">
-          Or enter a code to join a group
-        </h1>
-      </div>
-      <div className="mt-3 text-center">
-        <input
-          type="text"
-          value={idToConnect}
-          onChange={(e) => {
-            setIdToConnect(e.target.value.toUpperCase());
-          }}
-        />
-        <button
-          onClick={handleJoin}
-          disabled={idToConnect === null || name === ""}
-          className={`font-semibold text-white bg-green-500 rounded ${
-            (idToConnect === null || name === "") && "cursor-not-allowed"
-          }`}
-        >
-          Join
-        </button>
-      </div>
-  
     </div>
   );
 }

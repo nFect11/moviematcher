@@ -3,6 +3,7 @@ import { RoomProvider } from "../contexts/roomContext";
 import GenreSelector from "./genreSelector/GenreSelector";
 import GenreSelectorHate from "./genreSelector/GenreSelectorHate";
 import StreamingProvider from "./genreSelector/StreamingProvider";
+import GetStarted from "./landing/GetStarted";
 import Landing from "./landing/Landing";
 import MovieList from "./movies/MovieList";
 import { RoomDisplay } from "./RoomDisplay";
@@ -26,14 +27,16 @@ export default function Menu() {
           {(() => {
             switch (step) {
               case 0:
-                return <Landing start={handleNext}/>;
+                return <GetStarted start={handleNext} />;
               case 1:
-                return <GenreSelector />;
+                return <Landing start={handleNext} />;
               case 2:
-                return <GenreSelectorHate />;
+                return <GenreSelector />;
               case 3:
-                return <StreamingProvider />;
+                return <GenreSelectorHate />;
               case 4:
+                return <StreamingProvider />;
+              case 5:
                 return <MovieList />;
 
               default:

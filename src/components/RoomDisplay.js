@@ -18,11 +18,12 @@ export function RoomDisplay() {
     }
   }, [room?.users]);
 
-  if (room === 0) {
+  if (room === undefined) {
     return <div></div>;
   } else {
     return (
-      <div className="absolute top-0 right-0 font-bold text-white mt-36 mr-36">
+      <div className="absolute top-0 right-0 font-bold text-white">
+          <div>Test</div>
         <div>Username: {username}</div>
         <div>Room: {room?.uniqueRoom}</div>
         <div>Users: </div>

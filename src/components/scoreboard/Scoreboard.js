@@ -4,7 +4,7 @@ import { RoomContext } from "../../contexts/roomContext";
 
 export default function Scoreboard() {
   const { room } = useContext(RoomContext);
-
+  
   function voterList(votedMovie) {
     let nameList = [];
     votedMovie.votes.forEach((voterName) => {
@@ -55,7 +55,7 @@ export default function Scoreboard() {
   return (
     <div>
       <section>
-        <div className="grid grid-cols-3 gap-10 min-h-192 max-h-192 overflow-y-scroll">
+        <div className={`grid grid-cols-3 gap-10 min-h-192 max-h-192 overflow-y-scroll`}>
           {getListWithVoteCounts(room?.movieScoreList).map((movie, index) => (
             <div key={index}>
               <button data-for={`${index}`} data-tip data-iscapture="true">
@@ -64,9 +64,6 @@ export default function Scoreboard() {
                   src={`${imgPath}${movie.img}`}
                   alt={"alt"}
                 /></div>
-                <div className="absolute bottom-0 right-0 bg-gray-800">
-                    Test
-                </div>
               </button>
               <ReactTooltip
                 id={`${index}`}

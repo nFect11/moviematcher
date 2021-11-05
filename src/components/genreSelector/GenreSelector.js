@@ -25,16 +25,16 @@ export default function GenreSelector() {
   ];
 
   return (
-    <div className="flex h-screen">
-      <div className="m-auto text-center lg:w-1/4 sm:w-screen">
+    <div className="flex h-full w-full">
+      <div className="m-auto text-center">
         <div id="likeGenre">
-          <h1 className="text-white">Select genres you'd like to watch</h1>
+          <h1 className="text-white" style={{ fontSize: "2vw" }}>Select genres you'd like to watch</h1>
           <div className="flex-row flex-wrap gap-8">
             {GENRES.map((x) => {
               return (
-                <button
+                <button style={{ fontSize: "0.8vw" }}
                   name={x.genreId}
-                  className={`font-semibold h-12 w-28 my-2 mx-1 ${
+                  className={`font-semibold h-12 w-32 my-2 mx-2 ${
                     genreCtx.loveIt.includes(x.genreId)
                       ? "bg-green-300"
                       : genreCtx.hateIt.includes(x.genreId)
