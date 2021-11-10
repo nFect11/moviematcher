@@ -3,8 +3,6 @@ import { RoomContext } from "../contexts/roomContext";
 import Scoreboard from "./scoreboard/Scoreboard";
 import GenreContext from "./store/genre-context";
 
-
-
 export function RoomDisplay() {
   const { room } = useContext(RoomContext);
   const genreCtx = useContext(GenreContext);
@@ -23,7 +21,6 @@ export function RoomDisplay() {
   } else {
     return (
       <div className="absolute top-0 right-0 font-bold text-white">
-          <div>Test</div>
         <div>Username: {username}</div>
         <div>Room: {room?.uniqueRoom}</div>
         <div>Users: </div>

@@ -5,7 +5,6 @@ import { supabase } from "../../utils/supabaseClient";
 import GenreContext from "../store/genre-context";
 
 export default function Landing(props) {
-
   const { setRoom } = useContext(RoomContext);
   const [name, setName] = useState("");
   const [idToConnect, setIdToConnect] = useState(null);

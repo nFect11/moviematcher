@@ -28,11 +28,15 @@ export default function GenreSelector() {
     <div className="flex h-full w-full">
       <div className="m-auto text-center">
         <div id="likeGenre">
-          <h1 className="text-white" style={{ fontSize: "2vw" }}>Select genres you'd like to watch</h1>
+          <h1 className="text-white" style={{ fontSize: "1.7vw" }}>
+            Select genres you <span className="text-green-500">DO</span> like to
+            watch
+          </h1>
           <div className="flex-row flex-wrap gap-8">
             {GENRES.map((x) => {
               return (
-                <button style={{ fontSize: "0.8vw" }}
+                <button
+                  style={{ fontSize: "0.8vw" }}
                   name={x.genreId}
                   className={`font-semibold h-12 w-32 my-2 mx-2 ${
                     genreCtx.loveIt.includes(x.genreId)

@@ -152,15 +152,14 @@ export default function MovieCard(props) {
     return <div>Loading...</div>;
   }
   return (
-    <div className="grid grid-cols-3">
-      <div></div>
-      <div className="mt-24 shadow-lg">
-        <div className="relative w-3/4 mx-auto">
-            <img
-              className="rounded lg:h-1000px"
-              src={`${imgPath}${currentMovie.poster_path}`}
-              alt={currentMovie.title}
-            />
+    <div className="">
+      <div className="shadow-lg">
+        <div className="relative mx-auto">
+          <img
+            className="rounded h-3/5"
+            src={`${imgPath}${currentMovie.poster_path}`}
+            alt={currentMovie.title}
+          />
         </div>
         <div className="grid grid-cols-3 object-bottom text-lg">
           <Button
