@@ -5,43 +5,72 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
 
 body {
-  background-color: rgb(34, 40, 49);
-  font-family: "Open Sans", sans-serif;
+	background-color: rgb(34, 40, 49);
+	font-family: "Open Sans", sans-serif;
 }
 #get-started {
-  font-size: 2vw;
-  font-family: "Open Sans", sans-serif;
+	font-size: 2vw;
+	font-family: "Open Sans", sans-serif;
 }
 .comps {
-  background-color: rgb(57, 62, 70);
+	background-color: rgb(57, 62, 70);
+}
+/*Layout Matcher*/
+.main-area {
+	display: grid;
+	grid-template-columns: 0.7fr 1.6fr 1.6fr;
+	grid-template-rows: 0.3fr 2.5fr 0.2fr;
+	gap: 1% 1%;
+	grid-template-areas:
+		". navigation room-info"
+		"settings movie-area ranking"
+		"footer footer footer";
+}
+.room-info {
+	grid-area: room-info;
+}
+.navigation {
+	grid-area: navigation;
+}
+.movie-area {
+	grid-area: movie-area;
+}
+.ranking {
+	grid-area: ranking;
+}
+.footer {
+	grid-area: footer;
+}
+.settings {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	gap: 0px 0px;
+	grid-template-areas:
+		"likedGenres likedGenres likedGenres"
+		"dislikedGenres dislikedGenres dislikedGenres"
+		"services services services";
+	grid-area: settings;
+}
+.likedGenres {
+	grid-area: likedGenres;
+}
+.dislikedGenres {
+	grid-area: dislikedGenres;
+}
+.services {
+	grid-area: services;
 }
 
-.main-area {
-    display: grid; 
-    grid-template-columns: 0.7fr 1.6fr 1.6fr; 
-    grid-template-rows: 0.3fr 2.5fr 0.2fr; 
-    gap: 2% 2%; 
-    grid-template-areas: 
-      ". navigation room-info"
-      "settings movie-area ranking"
-      "footer footer footer"; 
-  }
-  .room-info { grid-area: room-info; }
-  .navigation { grid-area: navigation; }
-  .movie-area { grid-area: movie-area; }
-  .ranking { grid-area: ranking; }
-  .footer { grid-area: footer; }
-  .settings {
-    display: grid; 
-    grid-template-columns: 1fr 1fr 1fr; 
-    grid-template-rows: 1fr 1fr 1fr; 
-    gap: 0px 0px; 
-    grid-template-areas: 
-      "likedGenres likedGenres likedGenres"
-      "dislikedGenres dislikedGenres dislikedGenres"
-      "services services services"; 
-    grid-area: settings; 
-  }
-  .likedGenres { grid-area: likedGenres; }
-  .dislikedGenres { grid-area: dislikedGenres; }
-  .services { grid-area: services; }
+/*Scrollbar*/
+.scoreboard::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scoreboard::-webkit-scrollbar-track {
+  background: transparent; 
+}
+ 
+.scoreboard::-webkit-scrollbar-thumb {
+  background: transparent;
+}

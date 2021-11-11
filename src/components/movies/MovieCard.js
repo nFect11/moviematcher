@@ -156,7 +156,7 @@ export default function MovieCard(props) {
       <div className="shadow-lg">
         <div className="relative mx-auto">
           <img
-            className="rounded h-3/5"
+            className="rounded max-h-90vh min-h-90vh mx-auto"
             src={`${imgPath}${currentMovie.poster_path}`}
             alt={currentMovie.title}
           />
