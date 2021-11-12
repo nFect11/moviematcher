@@ -111,6 +111,7 @@ export default function MovieCard(props) {
         getNextMovie();
       }
     },
+    // eslint-disable-next-line
     [moviesSeen]
   );
 
@@ -146,6 +147,7 @@ export default function MovieCard(props) {
 
   useEffect(() => {
     fetchNewMovies(page);
+    // eslint-disable-next-line
   }, []);
 
   const imgPath = "https://image.tmdb.org/t/p/original";

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { RoomContext } from "../../contexts/roomContext";
 import { supabase } from "../../utils/supabaseClient";
 import GenreContext from "../store/genre-context";

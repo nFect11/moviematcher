@@ -33,7 +33,7 @@ export default function Setup(props) {
       <div className="h-screen w-screen flex">
         <div
           id="shadow-box"
-          className="comps relative w-1/3 h-1/3 mx-auto my-auto rounded-lg shadow-lg"
+          className="comps relative w-1/2 h-1/2 mx-auto my-auto rounded-lg shadow-lg"
         >
           <div className="absolute -left-20 top-1/2">
             <Button fontSize="large" onClick={handlePrev}>

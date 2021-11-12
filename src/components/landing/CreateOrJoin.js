@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { RoomContext } from "../../contexts/roomContext";
 import { supabase } from "../../utils/supabaseClient";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect} from "react";
 import GenreContext from "../store/genre-context";
 
 export default function CreateOrJoin(props) {
@@ -10,6 +10,7 @@ export default function CreateOrJoin(props) {
 
   useEffect(() => {
     genreCtx.changeUserId("_" + Math.random().toString(36).substr(2, 9));
+    // eslint-disable-next-line
   }, []);
 
   async function handleCreateGroup() {
