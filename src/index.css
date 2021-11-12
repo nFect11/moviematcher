@@ -22,9 +22,12 @@ body {
   grid-template-rows: 0.6fr 2fr 0.4fr;
   gap: 1% 1%;
   grid-template-areas:
-    ". navigation room-info"
+    "logo-div navigation room-info"
     "settings movie-area ranking"
     "footer footer footer";
+}
+.logo-div {
+  grid-area: logo-div;
 }
 .room-info {
   grid-area: room-info;

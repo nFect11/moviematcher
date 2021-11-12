@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
+import logoWhite from "../../images/LogoWhite.png"
 
 export default function GetStarted(props) {
   return (
@@ -7,7 +8,7 @@ export default function GetStarted(props) {
       <div className="w-1/3">
         <img
           className="w-full"
-          src="https://via.placeholder.com/1000x500"
+          src={logoWhite}
           alt="Logo"
         />
         <h2>
