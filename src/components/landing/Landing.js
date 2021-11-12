@@ -49,7 +49,7 @@ export default function Landing(props) {
     ]);
 
     setRoom(data[0]);
-
+    
     connect(data[0].id);
     props.start();
   }

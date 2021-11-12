@@ -42,6 +42,7 @@ export default function MovieCard(props) {
   }
 
   function getNextMovie() {
+    console.log("ROOM: ", room);
     for (let i = 0; i < room.movieScoreList.length; i++) {
       if (!moviesSeen.includes(room.movieScoreList[i].id)) {
         let axios = require("axios").default;
@@ -83,7 +84,7 @@ export default function MovieCard(props) {
       .from("rooms")
       .select("movieScoreList")
       .match({ id: room.id });
-
+    console.log("PREVDATA:", prevData);
     await supabase
       .from("rooms")
       .update({
@@ -156,7 +157,7 @@ export default function MovieCard(props) {
       <div className="shadow-lg">
         <div className="relative mx-auto">
           <img
-            className="rounded max-h-90vh min-h-90vh mx-auto"
+            className="rounded max-h-80vh min-h-80vh mx-auto object-scale-down"
             src={`${imgPath}${currentMovie.poster_path}`}
             alt={currentMovie.title}
           />

@@ -27,7 +27,6 @@ export function RoomDisplay() {
         {room?.users.map((user, index) => (
           <div key={index}>{user.name}</div>
         ))}
-        <Scoreboard />
       </div>
     );
   }

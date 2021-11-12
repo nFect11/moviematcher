@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import GenreContext from "../store/genre-context";
 
-export default function StreamingProvider() {
+export default function StreamingProvider(props) {
   const genreCtx = useContext(GenreContext);
   const imgPath = "https://image.tmdb.org/t/p/original";
   const PROVIDER = [
@@ -33,10 +33,12 @@ export default function StreamingProvider() {
   ];
 
   return (
-    <div className="flex h-screen">
-      <div className="m-auto text-center lg:w-1/4 sm:w-screen">
+    <div className="flex h-full w-full">
+      <div className="m-auto text-center">
         <div id="likeGenre">
-          <h1 className="text-white">Select your available Providers</h1>
+        <h1 className="text-white" style={{ fontSize: "1.7vw" }}>
+        Select your available Providers
+          </h1>
           <div className="flex-row flex-wrap gap-8">
             {PROVIDER.map((x) => {
               return (

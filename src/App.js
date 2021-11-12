@@ -1,9 +1,8 @@
 import { useState } from "react";
 import GetStarted from "./components/landing/GetStarted";
 import LayoutMatcher from "./components/layout/LayoutMatcher";
-import Menu from "./components/Menu"
 import Setup from "./components/setup/Setup";
-
+import { RoomProvider } from "./contexts/roomContext";
 function App() {
   const [step, changeStep] = useState(0);
 
@@ -13,19 +12,20 @@ function App() {
 
   return (
     <div className="App">
-      {(() => {
-        switch (step) {
-            case 0: 
-            return <LayoutMatcher />
-          case 1:
-            return <GetStarted start={handleNext} />;
-          case 2:
-            return <Setup />;
-          default:
-            return <div></div>;
-        }
-      })()}
-      
+      <RoomProvider>
+        {(() => {
+          switch (step) {
+            case 0:
+              return <GetStarted start={handleNext} />;
+            case 1:
+              return <Setup start={handleNext} />;
+            case 2:
+              return <LayoutMatcher />;
+            default:
+              return <div></div>;
+          }
+        })()}
+      </RoomProvider>
     </div>
   );
 }

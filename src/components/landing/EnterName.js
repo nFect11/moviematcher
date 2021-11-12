@@ -17,7 +17,7 @@ export default function EnterName(props) {
   return (
     <div className="flex flex-col h-full justify-center items-center">
       <h1 className="text-white" style={{ fontSize: "2vw" }}>
-        Enter a Name:
+        Name:
       </h1>
       <input
         style={{ fontSize: "2vw" }}

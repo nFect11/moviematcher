@@ -79,6 +79,7 @@ export default function CreateOrJoin(props) {
         <div>
           <Button
             disabled={genreCtx.userName === ""}
+            onClick={props.next}
             variant="contained"
             className="h-1/2 p-8"
             style={{ fontSize: "1.3vw" }}

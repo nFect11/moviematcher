@@ -56,7 +56,7 @@ export default function Scoreboard() {
 		<div>
 			<section>
 				<div
-					className={`scoreboard grid grid-cols-3 gap-10 min-h-90vh max-h-90vh overflow-y-scroll pr-8`}
+					className={`scoreboard grid grid-cols-3 gap-10 min-h-80vh max-h-80vh overflow-y-scroll pr-8`}
 				>
 					{getListWithVoteCounts(room?.movieScoreList).map(
 						(movie, index) => (
