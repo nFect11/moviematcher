@@ -48,7 +48,7 @@ export default function MovieCard(props) {
         let axios = require("axios").default;
         let options = {
           method: "GET",
-          url: `https://api.themoviedb.org/3/movie/${room.movieScoreList[i].id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US`,
+          url: `https://api.themoviedb.org/3/movie/${room.movieScoreList[i].id}?api_key=8da79493434d544b51390e63bbf6eee2&language=en-US`,
         };
         axios
           .request(options)
