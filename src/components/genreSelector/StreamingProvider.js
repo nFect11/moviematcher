@@ -1,55 +1,57 @@
 import { useContext } from "react";
 import GenreContext from "../store/genre-context";
+import appleTv from "../../images/providers/appleTv.jpg"
+import disneyPlus from "../../images/providers/disneyPlus.jpg"
+import netflix from "../../images/providers/netflix.jpg"
+import prime from "../../images/providers/prime.jpg"
+import skyTicket from "../../images/providers/skyTicket.jpg"
 
 export default function StreamingProvider(props) {
   const genreCtx = useContext(GenreContext);
-  const imgPath = "https://image.tmdb.org/t/p/original";
   const PROVIDER = [
     {
       name: "Netflix",
       provId: "8",
-      logoUrl: "/9A1JSVmSxsyaBK4SUFsYVqbAYfW.jpg",
+      logoUrl: netflix,
     },
     {
       name: "Amazon Prime",
       provId: "9",
-      logoUrl: "/68MNrwlkpF7WnmNPXLah69CR5cb.jpg",
+      logoUrl: prime,
     },
     {
       name: "Disney+",
       provId: "337",
-      logoUrl: "/dgPueyEdOwpQ10fjuhL2WYFQwQs.jpg",
+      logoUrl: disneyPlus,
     },
     {
       name: "Apple iTunes",
       provId: "2",
-      logoUrl: "/q6tl6Ib6X5FT80RMlcDbexIo4St.jpg",
+      logoUrl: appleTv,
     },
     {
       name: "Sky Ticket",
       provId: "30",
-      logoUrl: "/12H7kZk3kjUCXdUVkdJaSv4xyzH.jpg",
+      logoUrl: skyTicket,
     },
   ];
 
   return (
-    <div className="flex h-full w-full">
-      <div className="m-auto text-center">
-        <div id="likeGenre">
-        <h1 className="text-white" style={{ fontSize: "1.7vw" }}>
-        Select your available Providers
+    <div className="flex flex-col text-center h-full w-full justify-items-center">
+          <h1 className="text-white p-8 md:p-4 text-3xl">
+            Select your available streaming services
           </h1>
-          <div className="flex-row flex-wrap gap-8">
+          <div className="w-full grid grid-cols-2 gap-y-8 md:gap-y-12 xl:gap-y-16 justify-items-center justify-around genre-scroll overflow-y-auto">
             {PROVIDER.map((x) => {
               return (
                 <button onClick={genreCtx.handleStrProv}>
                   <img
-                    src={`${imgPath}${x.logoUrl}`}
+                    src={x.logoUrl}
                     name={x.provId}
-                    className={`${
+                    className={`rounded-lg w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-60 xl:h-60 filter ${
                       genreCtx.streamingProvider.includes(x.provId)
                         ? ""
-                        : "opacity-70"
+                        : "grayscale"
                     }`}
                     alt={x.name}
                   />
@@ -58,7 +60,5 @@ export default function StreamingProvider(props) {
             })}
           </div>
         </div>
-      </div>
-    </div>
   );
 }

@@ -72,7 +72,7 @@ export default function JoinRoom(props) {
         
           <Button
             disabled={idToConnect === ""}
-            sx={{ fontSize: "2.1rem", backgroundColor: "#E9A6A6"  }}
+            sx={{ fontSize: "2.1rem", backgroundColor: "#864879"  }}
             onClick={handleJoin}
             variant="contained"
             className="w-full md:w-3/4 h-1/5"

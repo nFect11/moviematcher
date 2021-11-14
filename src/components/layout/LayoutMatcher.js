@@ -22,7 +22,7 @@ export default function LayoutMatcher() {
 			<div className="comps ranking rounded-lg">
 				<h1>Scoreboard</h1> <Scoreboard />
 			</div>
-			<div className="comps footer rounded-lg"></div>
+			<div className="comps bottom-nav rounded-lg"></div>
 			<div className="comps settings rounded-lg">
 				<div className="comps likedGenres">
 					<UserInfo />

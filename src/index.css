@@ -27,7 +27,7 @@ body {
   grid-template-areas:
     "logo-div navigation room-info"
     "settings movie-area ranking"
-    "footer footer footer";
+    "bottom-nav bottom-nav bottom-nav";
 }
 .logo-div {
   grid-area: logo-div;
@@ -44,8 +44,8 @@ body {
 .ranking {
   grid-area: ranking;
 }
-.footer {
-  grid-area: footer;
+.bottom-nav {
+  grid-area: bottom-nav;
 }
 .settings {
   display: grid;

@@ -65,7 +65,9 @@ export default function CreateOrJoin(props) {
 				<Button
 					onClick={handleCreateGroup}
 					disabled={genreCtx.userName === ""}
-					sx={{ fontSize: "2.1rem", backgroundColor: "#E9A6A6" }}
+					sx={{ fontSize: "2.1rem", backgroundColor: "#864879", "&:hover": {
+						backgroundColor: "#d47bc7",
+					}, }}
 					variant="contained"
 					className="w-4/5 md:w-3/4 h-4/5 md:h-2/5"
 				>
@@ -75,7 +77,13 @@ export default function CreateOrJoin(props) {
 				</Button>
 				<Button
 					disabled={genreCtx.userName === ""}
-					sx={{ fontSize: "2.1rem", backgroundColor: "#E9A6A6"  }}
+					sx={{
+						fontSize: "2.1rem",
+						backgroundColor: "#864879",
+						"&:hover": {
+							backgroundColor: "#d47bc7",
+						},
+					}}
 					onClick={props.next}
 					variant="contained"
 					className="w-4/5 md:w-3/4 h-4/5 md:h-2/5"

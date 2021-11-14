@@ -3,10 +3,8 @@ import CreateOrJoin from "../landing/CreateOrJoin";
 import GenreSelector from "../genreSelector/GenreSelector";
 import GenreSelectorHate from "../genreSelector/GenreSelectorHate";
 import StreamingProvider from "../genreSelector/StreamingProvider";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { Button } from "@mui/material";
 import JoinRoom from "../landing/JoinRoom";
+import NavButtons from "./NavButtons";
 
 export default function Setup(props) {
 	const [stepper, changeStepper] = useState(0);
@@ -32,7 +30,7 @@ export default function Setup(props) {
 		<div className="h-screen w-screen flex">
 			<div
 				id="shadow-box"
-				className="comps relative w-screen sm:w-4/5 lg:w-3/5 h-5/6 md:h-3/4 mx-auto my-auto rounded-lg shadow-lg"
+				className="comps relative w-screen sm:w-4/5 lg:w-3/5 xl:w-1/2 h-5/6 md:h-3/4  mx-auto mt-8 lg:my-auto rounded-lg shadow-lg"
 			>
 				{(() => {
 					switch (stepper) {
@@ -55,10 +53,7 @@ export default function Setup(props) {
 							return <div></div>;
 					}
 				})()}
-				<div className="grid grid-cols-2">
-					<button onClick={handlePrev}>Prev</button>
-          <button onClick={handleNext}>Next</button>
-				</div>
+				{stepper > 1 && (<NavButtons prev={handlePrev} next={handleNext} />)}
 			</div>
 		</div>
 	);

@@ -24,7 +24,7 @@ export default function GenreSelector() {
   ];
 
   return (
-    <div className="flex flex-col text-center h-full w-full">
+    <div className="flex flex-col text-center h-full w-full justify-items-center">
           <h1 className="text-white p-8 md:p-4 text-3xl">
             Select genres you <span className="text-green-500">DO</span> like to
             watch
