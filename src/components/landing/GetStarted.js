@@ -5,9 +5,9 @@ import logoWhite from "../../images/LogoWhite.png";
 export default function GetStarted(props) {
 	return (
 		<div className="flex flex-col w-screen h-screen justify-center items-center">
-			<div className="w-1/3">
+			<div className="lg:w-2/5 sm: w-4/5">
 				<img className="w-full" src={logoWhite} alt="Logo" />
-				<h2 className="text-white text-justify py-8">
+				<h2 className="text-white text-justify py-8 text-xl">
 					Are you sick of endlessly browsing through Netflix, Prime or
 					Disney+ with your friends trying to find an entertaining
 					movie?<br />MovieMatcher tries to provide a solution to this
@@ -22,13 +22,13 @@ export default function GetStarted(props) {
 				</h2>
 				<Button
 					onClick={props.start}
-					className="h-24 w-full"
-					id="get-started"
+					className="w-full btn"
+					sx={{fontSize: "1.2rem", backgroundColor: "#E9A6A6"}}
 					variant="contained"
 					startIcon={<KeyboardArrowRightOutlinedIcon />}
 					endIcon={<KeyboardArrowRightOutlinedIcon />}
 				>
-					Get Started
+					Let's go
 				</Button>
 			</div>
 		</div>

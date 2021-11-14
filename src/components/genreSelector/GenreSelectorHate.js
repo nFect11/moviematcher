@@ -19,26 +19,22 @@ export default function GenreSelectorHate() {
     { name: "Romance", genreId: "10749" },
     { name: "Sci-Fi", genreId: "878" },
     { name: "War", genreId: "10752" },
-    { name: "Western", genreId: "37" },
     { name: "Horror", genreId: "27" },
     { name: "Musical", genreId: "10402" },
   ];
 
   return (
-    <div className="flex h-full w-full">
-      <div className="m-auto text-center">
-        <div id="likeGenre">
-          <h1 className="text-white" style={{ fontSize: "1.7vw" }}>
-            Select genres you{" "}
-            <span className="text-red-500">DON'T</span> like to watch
+    <div className="flex flex-col text-center h-full w-full">
+          <h1 className="text-white p-8 md:p-4 text-3xl">
+            Select genres you <span className="text-red-500">DON'T</span> like to
+            watch
           </h1>
-          <div className="flex-row flex-wrap gap-8">
+          <div className="w-full grid grid-cols-2 gap-y-8 md:gap-y-12 xl:gap-y-16 md:grid-cols-3 xl:grid-cols-4 justify-items-center justify-around genre-scroll overflow-y-auto">
             {GENRES.map((x) => {
               return (
                 <button
-                  style={{ fontSize: "0.8vw" }}
                   name={x.genreId}
-                  className={`font-semibold h-12 w-32 my-2 mx-2 ${
+                  className={`font-semibold text-2xl w-40 md:w-44 h-16 ${
                     genreCtx.loveIt.includes(x.genreId)
                       ? "bg-green-300"
                       : genreCtx.hateIt.includes(x.genreId)
@@ -59,7 +55,5 @@ export default function GenreSelectorHate() {
             })}
           </div>
         </div>
-      </div>
-    </div>
   );
 }

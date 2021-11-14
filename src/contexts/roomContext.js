@@ -9,7 +9,6 @@ export function RoomProvider({ children }) {
 
   useEffect(
     function () {
-      console.log(room);
     },
     [room]
   );

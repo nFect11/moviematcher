@@ -57,34 +57,28 @@ export default function JoinRoom(props) {
     
 
 <div className="h-full flex flex-col justify-around items-center">
-      <div className="flex flex-col h-1/2 justify-center items-center">
-        <h1 className="text-white" style={{ fontSize: "2vw" }}>
+        <h1 className="text-white pt-8 text-7xl">
           Room ID:
         </h1>
         <input
-        style={{ fontSize: "2vw" }}
         type="text"
+        className="w-4/5 text-6xl"
         value={idToConnect}
         onChange={(e) => {
           setIdToConnect(e.target.value.toUpperCase());
         }}
         onKeyDown={handleKeyDown}
       />
-      </div>
-      <div className="h-1/2 grid grid-flow-col justify-center items-center">
         
-        <div>
           <Button
             disabled={idToConnect === ""}
+            sx={{ fontSize: "2.1rem", backgroundColor: "#E9A6A6"  }}
             onClick={handleJoin}
             variant="contained"
-            className="h-1/2 p-8"
-            style={{ fontSize: "1.3vw" }}
+            className="w-full md:w-3/4 h-1/5"
           >
-            Join a group
+            Join<br />group
           </Button>
-        </div>
-      </div>
     </div>
 
 
