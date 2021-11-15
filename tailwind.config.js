@@ -16,7 +16,8 @@ module.exports = {
         "8vh": "8vh",
         "9vh": "9vh",
         "10vh": "10vh",
-        "1/10": "10%"
+        "94vh": "94vh",
+        "1/10": "10%",
       },
       maxHeight: {
         192: "48rem",
