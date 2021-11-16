@@ -54,14 +54,16 @@ export default function Scoreboard() {
 
   return (
     <div
-      className={`scoreboard grid grid-cols-3 gap-10 min-h-80vh max-h-80vh overflow-y-scroll pr-8`}
+      className={`w-full scoreboard grid grid-cols-3 gap-10 min-h-80vh max-h-80vh pt-2 pl-2 pr-2 overflow-y-scroll `}
     >
       {getListWithVoteCounts(room?.movieScoreList).map((movie, index) => (
         <div key={index}>
           <button data-for={`${index}`} data-tip data-iscapture="true">
             <div className="relative ">
               <img
-                className="h-1/4 rounded"
+                className={`h-1/4 rounded ${
+                  room?.users.length === movie.votes.length && `outline-green`
+                }`}
                 src={`${imgPath}${movie.img}`}
                 alt={"alt"}
               />
@@ -81,7 +83,14 @@ export default function Scoreboard() {
               </tr>
               <tr className="leading-8">
                 <td>Votes:</td>
-                <td className="text-right">{movie.votes.length}</td>
+                <td
+                  className={`text-right ${
+                    room?.users.length === movie.votes.length &&
+                    `text-green-400`
+                  }`}
+                >
+                  {movie.votes.length}
+                </td>
               </tr>
               <tr>
                 <td className="leading-8 align-text-top">Voter:</td>

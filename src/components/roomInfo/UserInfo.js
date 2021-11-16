@@ -3,28 +3,28 @@ import GenreContext from "../store/genre-context";
 import { RoomContext } from "../../contexts/roomContext";
 
 export default function UserInfo() {
-	const genreCtx = useContext(GenreContext);
+  const genreCtx = useContext(GenreContext);
 
-	const { room } = useContext(RoomContext);
-	const [username, changeUsername] = useState("");
+  const { room } = useContext(RoomContext);
+  const [username, changeUsername] = useState("");
 
-	useEffect(() => {
-		for (let i = 0; i < room?.users.length; i++) {
-			if (genreCtx.userId === room?.users[i].id)
-				changeUsername(room?.users[i].name);
-		}
-        // eslint-disable-next-line
-	}, [room?.users]);
+  useEffect(() => {
+    for (let i = 0; i < room?.users.length; i++) {
+      if (genreCtx.userId === room?.users[i].id)
+        changeUsername(room?.users[i].name);
+    }
+    // eslint-disable-next-line
+  }, [room?.users]);
 
-	return (
-		<div>
-			<div className="w-full text-center text-white">
-				<span className="text-xl">Username</span>
-			</div>
+  return (
+    <div>
+      <div className="w-full text-center text-white">
+        <span className="text-3xl">Username</span>
+      </div>
 
-			<div className="w-full text-white text-center" style={{ fontSize: "1.5vw" }}>
-				{username}
-			</div>
-		</div>
-	);
+      <div className="w-full text-white pt-4 text-center text-2xl">
+        {username}
+      </div>
+    </div>
+  );
 }

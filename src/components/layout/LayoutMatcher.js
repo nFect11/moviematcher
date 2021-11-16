@@ -16,10 +16,16 @@ export default function LayoutMatcher() {
   const [group, toggleGroup] = useState(true);
 
   const handleLeaderClick = () => {
+    toggleGroup(true);
     toggleLeaderboard(!leaderboard);
   };
   const handleGroupClick = () => {
+    toggleLeaderboard(true);
     toggleGroup(!group);
+  };
+  const handleMovieClick = () => {
+    toggleLeaderboard(true);
+    toggleGroup(true);
   };
 
   return (
@@ -28,29 +34,29 @@ export default function LayoutMatcher() {
         <MovieCard />
       </div>
       <div
-        className={`absolute comps w-screen h-full top-0 left-0 ${
+        className={`absolute comps w-screen movie-area h-full pl-2 top-0 pt-4 left-0 ${
           leaderboard && `hidden`
         }`}
       >
         <Scoreboard />
       </div>
       <div
-        className={`absolute comps w-screen h-full top-0 left-0 ${
+        className={`grid grid-rows-3 absolute comps w-screen movie-area h-full top-0 left-0 ${
           group && `hidden`
         }`}
       >
-        <div className="comps likedGenres">
+        <div className="comps">
           <UserInfo />
         </div>
-        <div className="comps dislikedGenres">
+        <div className="comps">
           <RoomDisplay />
         </div>
-        <div className="comps services">
+        <div className="comps">
           <UserList />
         </div>
       </div>
       <div className="w-full comps ranking rounded-lg mobileOnly">
-        <h1>Scoreboard</h1> <Scoreboard />
+        <Scoreboard />
       </div>
 
       <div className="comps settings rounded-lg mobileOnly">
@@ -65,8 +71,8 @@ export default function LayoutMatcher() {
         </div>
       </div>
       <div className="h-screen absolute">
-        <div className="absolute navi bottom-0">
-          <div className="grid grid-cols-3 grid-rows-1 w-screen h-6vh">
+        <div className="absolute navi bottom-4">
+          <div className="grid grid-cols-3 grid-rows-1 w-screen h-10vh">
             <Button
               variant="contained"
               onClick={handleGroupClick}
@@ -81,6 +87,7 @@ export default function LayoutMatcher() {
               <GroupsIcon fontSize="large" />
             </Button>
             <Button
+              onClick={handleMovieClick}
               variant="contained"
               sx={{
                 backgroundColor: "#E9A6A6",

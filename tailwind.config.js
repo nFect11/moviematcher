@@ -33,6 +33,10 @@ module.exports = {
         192: "48rem",
         "1/2": "50%",
       },
+      outline: {
+        green: "2px solid #B4FE98",
+      },
+      
     },
   },
   variants: {
