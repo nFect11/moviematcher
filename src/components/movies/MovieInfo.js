@@ -1,5 +1,7 @@
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import Rating from "@mui/material/Rating";
+import StarIcon from "@mui/icons-material/Star";
 
 export default function MovieInfo(props) {
   const imgPath = "https://image.tmdb.org/t/p/original";
@@ -28,7 +30,6 @@ export default function MovieInfo(props) {
         </div>
         <div className="text-white text-lg col-span-5 md:col-span-3 align-text-top leading-10 ">
           <div className="absolute top-2 right-4">
-            
             <CloseIcon className="cursor-pointer" onClick={props.modal} />{" "}
           </div>
           <div className="text-3xl text-center">{props.movie?.title}</div>
@@ -45,6 +46,23 @@ export default function MovieInfo(props) {
                     <li>{x.name}</li>
                   ))}
                 </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>Score:</td>
+              <td>
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={props.movie?.vote_average / 2}
+                  precision={0.2}
+                  emptyIcon={
+                    <StarIcon
+                      style={{ opacity: 0.25, color: "white" }}
+                      fontSize="inherit"
+                    />
+                  }
+                  readOnly
+                />
               </td>
             </tr>
             <tr>

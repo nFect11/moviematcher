@@ -86,7 +86,7 @@ export default function LayoutMatcher() {
       </div>
       <div className="h-screen absolute">
         <div className="fixed navi bottom-4">
-          <div className="grid grid-cols-3 grid-rows-1 w-screen h-10vh">
+          <div className="grid grid-cols-3 grid-rows-1 w-screen h-5vh">
             <Button
               variant="contained"
               onClick={handleGroupClick}
