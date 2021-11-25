@@ -36,7 +36,10 @@ module.exports = {
       outline: {
         green: "2px solid #B4FE98",
       },
-      
+      inset: {
+        "1/10": "10%",
+        "1/5": "20%",
+      },
     },
   },
   variants: {

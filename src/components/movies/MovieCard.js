@@ -50,7 +50,7 @@ export default function MovieCard(props) {
     axios
       .request(options)
       .then((response) => {
-        console.log("Info Call: ", response.data);
+        props.modalMovie(response.data);
       })
       .catch((error) => {
         console.error(error);
