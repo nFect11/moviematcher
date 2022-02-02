@@ -5,7 +5,6 @@ import StarIcon from "@mui/icons-material/Star";
 
 export default function MovieInfo(props) {
   const imgPath = "https://image.tmdb.org/t/p/original";
-  const ytLink = "https://www.youtube.com/watch?v=";
 
   const [embededTrailer, changeEmbededTrailer] = useState(null);
 

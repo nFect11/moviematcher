@@ -3,6 +3,7 @@ import GetStarted from "./components/landing/GetStarted";
 import LayoutMatcher from "./components/layout/LayoutMatcher";
 import Setup from "./components/setup/Setup";
 import { RoomProvider } from "./contexts/roomContext";
+import { Landing } from "./components/design/landing";
 function App() {
   const [step, changeStep] = useState(0);
 
