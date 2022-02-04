@@ -4,6 +4,8 @@ import LayoutMatcher from "./components/layout/LayoutMatcher";
 import Setup from "./components/setup/Setup";
 import { RoomProvider } from "./contexts/roomContext";
 import { Landing } from "./components/design/landing";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 function App() {
   const [step, changeStep] = useState(0);
 
@@ -14,18 +16,26 @@ function App() {
   return (
     <div className="App">
       <RoomProvider>
-        {(() => {
-          switch (step) {
-            case 0:
-              return <GetStarted start={handleNext} />;
-            case 1:
-              return <Setup start={handleNext} />;
-            case 2:
-              return <LayoutMatcher />;
-            default:
-              return <div></div>;
-          }
-        })()}
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<GetStarted />} />
+            <Route path="/setup/" element={<Setup />} />
+            <Route path="/swiper/" element={<LayoutMatcher />} />
+
+            {/* {(() => {
+              switch (step) {
+                case 0:
+                  return <GetStarted start={handleNext} />;
+                case 1:
+                  return <Setup start={handleNext} />;
+                case 2:
+                  return <LayoutMatcher />;
+                default:
+                  return <div></div>;
+              }
+            })()} */}
+          </Routes>
+        </BrowserRouter>
       </RoomProvider>
     </div>
   );

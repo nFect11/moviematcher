@@ -1,12 +1,15 @@
 import { Button } from "@mui/material";
 import { RoomContext } from "../../contexts/roomContext";
 import { supabase } from "../../utils/supabaseClient";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import GenreContext from "../store/genre-context";
+import Backdrop from "../movies/Backdrop";
+import JoinModal from "./JoinModal";
 
 export default function CreateOrJoin(props) {
   const genreCtx = useContext(GenreContext);
   const { setRoom } = useContext(RoomContext);
+  const [modalOpen, toggleModal] = useState(false);
 
   useEffect(() => {
     genreCtx.changeUserId("_" + Math.random().toString(36).substr(2, 9));
@@ -54,11 +57,14 @@ export default function CreateOrJoin(props) {
   }
 
   function openJoinModal() {
-    
+    toggleModal(!modalOpen);
   }
 
   return (
     <div className="h-full flex flex-col justify-between items-center">
+      {modalOpen && <JoinModal next={props.next} />}
+      {modalOpen && <Backdrop modal={openJoinModal} />}
+
       <input
         value={genreCtx.userName}
         placeholder="Name"
@@ -92,7 +98,7 @@ export default function CreateOrJoin(props) {
               backgroundColor: "#d47bc7",
             },
           }}
-          onClick={props.next}
+          onClick={openJoinModal}
           variant="contained"
           className="w-4/5 md:w-3/4 h-4/5 md:h-2/5"
         >

@@ -4,12 +4,12 @@
 
 ### API Server
 
- - Handle API requests with Express.js Server
- - 
+- Handle API requests with Express.js Server
+-
 
 ### Room
 
-- Check room availability
+- Check room availability | ✓
 - Resume active session
 - Room cleanup after all parties left the session
 - Share-able link to auto-join room
