@@ -36,6 +36,7 @@ export default function JoinModal(props) {
       alert("Invalid room name!");
       return;
     } else {
+      genreCtx.changeRoomId(idToConnect);
       const { data } = await supabase
         .from("rooms")
         .update({

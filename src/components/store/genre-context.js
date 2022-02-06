@@ -6,19 +6,22 @@ const GenreContext = createContext({
   streamingProvider: [],
   userName: "",
   userId: "",
+  roomId: "",
   handleLoveIt: (event) => {},
   handleHateIt: (event) => {},
   handleStrProv: (event) => {},
   changeUserId: (event) => {},
   changeUserName: (event) => {},
+  changeRoomId: (event) => {},
 });
 
 export function GenreContextProvider(props) {
   const [loveItItems, setLoveIt] = useState([]);
   const [hateItItems, setHateIt] = useState([]);
-  const [userId, setUserId] = useState("")
-  const [userName, setUserName] = useState("")
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
   const [streamingProviderItems, setStreamingProvider] = useState([]);
+  const [roomId, changeRoomId] = useState("");
 
   const loveItHandler = (event) => {
     if (loveItItems.includes(event.target.name)) {
@@ -38,17 +41,24 @@ export function GenreContextProvider(props) {
   };
   const strProviderHandler = (event) => {
     if (streamingProviderItems.includes(event.target.name)) {
-        setStreamingProvider(streamingProviderItems.filter((provider) => provider !== event.target.name));
+      setStreamingProvider(
+        streamingProviderItems.filter(
+          (provider) => provider !== event.target.name
+        )
+      );
     } else {
-        setStreamingProvider(streamingProviderItems.concat(event.target.name));
+      setStreamingProvider(streamingProviderItems.concat(event.target.name));
     }
   };
   const userIdHandler = (event) => {
-    setUserId(event)
-  }
+    setUserId(event);
+  };
   const userNameHandler = (event) => {
-    setUserName(event)
-  }
+    setUserName(event);
+  };
+  const roomIdHandler = (event) => {
+    changeRoomId(event);
+  };
 
   const context = {
     loveIt: loveItItems,
@@ -56,11 +66,13 @@ export function GenreContextProvider(props) {
     streamingProvider: streamingProviderItems,
     userId: userId,
     userName: userName,
+    roomId: roomId,
     handleLoveIt: loveItHandler,
     handleHateIt: hateItHandler,
     handleStrProv: strProviderHandler,
-    changeUserId: userIdHandler, 
+    changeUserId: userIdHandler,
     changeUserName: userNameHandler,
+    changeRoomId: roomIdHandler,
   };
   return (
     <GenreContext.Provider value={context}>
@@ -68,4 +80,4 @@ export function GenreContextProvider(props) {
     </GenreContext.Provider>
   );
 }
-export default GenreContext
+export default GenreContext;
