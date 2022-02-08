@@ -24,7 +24,7 @@ export default function CreateOrJoin(props) {
       const randomNum = Math.floor(Math.random() * characters.length);
       randomStr += characters[randomNum];
     }
-
+    genreCtx.changeRoomId(randomStr);
     const { data } = await supabase.from("rooms").insert([
       {
         uniqueRoom: randomStr,
@@ -32,11 +32,14 @@ export default function CreateOrJoin(props) {
         movieScoreList: [],
       },
     ]);
-
     setRoom(data[0]);
 
+    localStorage.setItem("room", randomStr);
+    localStorage.setItem("name", genreCtx.userName);
+    localStorage.setItem("userId", genreCtx.userId);
+
     connect(data[0].id);
-    props.doubleNext();
+    props.next();
   }
 
   function connect(id) {
@@ -54,6 +57,7 @@ export default function CreateOrJoin(props) {
         updateRoom();
       })
       .subscribe();
+    console.log(supabase.getSubscriptions());
   }
 
   function openJoinModal() {

@@ -1,27 +1,29 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import CreateOrJoin from "../landing/CreateOrJoin";
 import GenreSelector from "../genreSelector/GenreSelector";
 import GenreSelectorHate from "../genreSelector/GenreSelectorHate";
 import StreamingProvider from "../genreSelector/StreamingProvider";
-import JoinRoom from "../landing/JoinRoom";
 import NavButtons from "./NavButtons";
 import { useNavigate } from "react-router-dom";
+import GenreContext from "../store/genre-context";
 
 export default function Setup(props) {
   const [stepper, changeStepper] = useState(0);
+  const genreCtx = useContext(GenreContext);
+
   let navigate = useNavigate();
 
   const handleNext = () => {
     if (stepper === 3) {
+      localStorage.setItem("lastRoom", genreCtx.roomId);
+      localStorage.removeItem("room");
       navigate("../swiper");
       return;
     } else {
       changeStepper(stepper + 1);
     }
   };
-  const handleDoubleNext = () => {
-    changeStepper(stepper + 1);
-  };
+
   const handlePrev = () => {
     if (stepper > 0) {
       changeStepper(stepper - 1);
@@ -37,9 +39,7 @@ export default function Setup(props) {
         {(() => {
           switch (stepper) {
             case 0:
-              return (
-                <CreateOrJoin next={handleNext} doubleNext={handleDoubleNext} />
-              );
+              return <CreateOrJoin next={handleNext} />;
             case 1:
               return <GenreSelector />;
             case 2:

@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 import ReactTooltip from "react-tooltip";
 import { RoomContext } from "../../contexts/roomContext";
 
-export default function Scoreboard() {
+export default function Scoreboard(props) {
   const { room } = useContext(RoomContext);
 
   function voterList(votedMovie) {
@@ -34,6 +34,7 @@ export default function Scoreboard() {
         votes: [movies[i].voter],
         img: movies[i].poster_path,
         title: movies[i].title,
+        id: movies[i].id,
       });
     }
 
@@ -45,6 +46,23 @@ export default function Scoreboard() {
 
     return movieswithVoteCounts;
   }
+
+  const openMovieInfo = (event) => {
+    let axios = require("axios").default;
+    let options = {
+      method: "GET",
+      url: `https://api.themoviedb.org/3/movie/${event.target.name}?api_key=8da79493434d544b51390e63bbf6eee2&language=en-US&append_to_response=videos,watch/providers`,
+    };
+    axios
+      .request(options)
+      .then((response) => {
+        props.scoreboardInfo(response.data);
+        console.log(response.data["watch/providers"].results.DE.flatrate);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const imgPath = "https://image.tmdb.org/t/p/original";
 
@@ -58,12 +76,18 @@ export default function Scoreboard() {
     >
       {getListWithVoteCounts(room?.movieScoreList).map((movie, index) => (
         <div key={index}>
-          <button data-for={`${index}`} data-tip data-iscapture="true">
+          <button
+            data-for={`${index}`}
+            data-tip
+            data-iscapture="true"
+            onClick={openMovieInfo}
+          >
             <div className="relative ">
               <img
                 className={`h-1/4 rounded ${
                   room?.users.length === movie.votes.length && `outline-green`
                 }`}
+                name={`${movie.id}`}
                 src={`${imgPath}${movie.img}`}
                 alt={"alt"}
               />

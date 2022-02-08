@@ -9,11 +9,11 @@
 
 ### Room
 
-- Check room availability | ✓
+- Check room availability   |   ✓
 - Resume active session
 - Room cleanup after all parties left the session
 - Share-able link to auto-join room
-- Join room as modal instead of full page
+- Join room as modal instead of full page   |   ✓
 - Host will be able to lock streaming services
 
 ### Choosing preferences
@@ -32,7 +32,7 @@
 - Keep the same logic, present liked movies from one user to the other users
 - Like cooldown, prevent like spamming
 - Present a pop-up after 3 movies have been liked by everyone, ask if they would like to keep going or decide on one of the movies
-- Enable clicking on liked movies to show movie info
+- Enable clicking on liked movies to show movie info   |   ✓
 
 ### Future Projects
 

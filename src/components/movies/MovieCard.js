@@ -12,7 +12,7 @@ export default function MovieCard(props) {
   const { room } = useContext(RoomContext);
   const genreCtx = useContext(GenreContext);
   //State
-  const [likedMovies, changeLikedMovies] = useState([]);
+  //const [likedMovies, changeLikedMovies] = useState([]);
   const [moviesSeen, changeMoviesSeen] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -70,6 +70,7 @@ export default function MovieCard(props) {
           .request(options)
           .then((response) => {
             setCurrentMovie(response.data);
+            localStorage.setItem("currentMovie", response.data);
             setLoading(false);
           })
           .catch((error) => {
@@ -90,12 +91,12 @@ export default function MovieCard(props) {
   }
 
   const handleLike = async (event) => {
-    changeLikedMovies([
+    /* changeLikedMovies([
       ...likedMovies,
       { id: currentMovie.id, poster_path: currentMovie.poster_path },
-    ]);
+    ]); */
     changeMoviesSeen([...moviesSeen, currentMovie.id]);
-
+    localStorage.setItem("moviesSeen", [...moviesSeen, currentMovie.id]);
     const { data: prevData } = await supabase
       .from("rooms")
       .select("movieScoreList")
@@ -133,6 +134,7 @@ export default function MovieCard(props) {
   const fetchNewMovies = (pageToFetch) => {
     let tempMoviesList = [];
     setPage(page + 1);
+    localStorage.setItem("page", page);
     let axios = require("axios").default;
     let options = {
       method: "GET",
