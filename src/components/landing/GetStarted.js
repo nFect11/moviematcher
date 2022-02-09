@@ -1,9 +1,11 @@
 import { Button } from "@mui/material";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import logoWhite from "../../images/LogoWhite.png";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function GetStarted(props) {
+  
   return (
     <div className="flex flex-col w-screen h-screen justify-center items-center">
       <div className="lg:w-2/5 sm: w-4/5">

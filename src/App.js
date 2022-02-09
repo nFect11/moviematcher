@@ -3,9 +3,14 @@ import GetStarted from "./components/landing/GetStarted";
 import LayoutMatcher from "./components/layout/LayoutMatcher";
 import Setup from "./components/setup/Setup";
 import { RoomProvider } from "./contexts/roomContext";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 export default function App() {
+  
   return (
     <div className="App">
       <RoomProvider>

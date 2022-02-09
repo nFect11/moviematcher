@@ -34,7 +34,7 @@ export default function CreateOrJoin(props) {
     ]);
     setRoom(data[0]);
 
-    localStorage.setItem("room", randomStr);
+    localStorage.setItem("lastRoom", randomStr);
     localStorage.setItem("name", genreCtx.userName);
     localStorage.setItem("userId", genreCtx.userId);
 
@@ -57,7 +57,6 @@ export default function CreateOrJoin(props) {
         updateRoom();
       })
       .subscribe();
-    console.log(supabase.getSubscriptions());
   }
 
   function openJoinModal() {
@@ -78,7 +77,9 @@ export default function CreateOrJoin(props) {
       <div className="h-1/2 w-full grid grid-flow-row md:grid-flow-col items-center justify-items-center">
         <Button
           onClick={handleCreateGroup}
-          disabled={genreCtx.userName === ""}
+          disabled={
+            genreCtx.userName === "" || localStorage.getItem("room") != null
+          }
           sx={{
             fontSize: "2.1rem",
             backgroundColor: "#864879",

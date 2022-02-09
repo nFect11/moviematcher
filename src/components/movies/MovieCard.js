@@ -119,6 +119,7 @@ export default function MovieCard(props) {
 
   const handleHate = (event) => {
     changeMoviesSeen([...moviesSeen, currentMovie.id]);
+    localStorage.setItem("moviesSeen", [...moviesSeen, currentMovie.id]);
   };
 
   useEffect(
