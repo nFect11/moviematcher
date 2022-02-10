@@ -82,7 +82,7 @@ export default function CreateOrJoin(props) {
           }
           sx={{
             fontSize: "2.1rem",
-            backgroundColor: "#864879",
+            backgroundColor: "#F76E11",
             "&:hover": {
               backgroundColor: "#d47bc7",
             },
@@ -98,7 +98,7 @@ export default function CreateOrJoin(props) {
           disabled={genreCtx.userName === ""}
           sx={{
             fontSize: "2.1rem",
-            backgroundColor: "#864879",
+            backgroundColor: "#F76E11",
             "&:hover": {
               backgroundColor: "#d47bc7",
             },

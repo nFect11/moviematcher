@@ -16,6 +16,10 @@ export default function Setup(props) {
   let navigate = useNavigate();
 
   const handleNext = () => {
+      if (stepper === 0){
+          localStorage.removeItem("lastRoom")
+        changeStepper(stepper + 1);
+      }
     if (stepper === 3) {
       localStorage.setItem("hateGenres", genreCtx.hateIt);
       localStorage.setItem("loveGenres", genreCtx.loveIt);
