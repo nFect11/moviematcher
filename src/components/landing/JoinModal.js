@@ -48,6 +48,11 @@ export default function JoinModal(props) {
         .match({ uniqueRoom: idToConnect });
       setRoom(data[0]);
 
+      localStorage.setItem("lastRoom", idToConnect);
+      localStorage.setItem("name", genreCtx.userName);
+      localStorage.setItem("userId", genreCtx.userId);
+      genreCtx.setLobby("false");
+
       connect(prevData[0].id);
       props.next();
     }
