@@ -37,6 +37,7 @@ export default function CreateOrJoin(props) {
     localStorage.setItem("lastRoom", randomStr);
     localStorage.setItem("name", genreCtx.userName);
     localStorage.setItem("userId", genreCtx.userId);
+    genreCtx.setLobby("false");
 
     connect(data[0].id);
     props.next();

@@ -11,15 +11,11 @@ export default function Setup(props) {
   const [stepper, changeStepper] = useState(0);
   const genreCtx = useContext(GenreContext);
 
-  console.log(props.inviteId);
-
   let navigate = useNavigate();
 
   const handleNext = () => {
     if (stepper === 3) {
-      localStorage.setItem("hateGenres", genreCtx.hateIt);
-      localStorage.setItem("loveGenres", genreCtx.loveIt);
-      localStorage.setItem("providers", genreCtx.streamingProvider);
+
       navigate("../swiper");
       return;
     } else {

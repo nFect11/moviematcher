@@ -22,6 +22,8 @@ export default function LayoutMatcher() {
   if (localStorage.getItem("lastRoom") === null) {
     return <Navigate replace to="/" />;
   } else {
+    localStorage.setItem("leftLobby", "true");
+
     const handleLeaderClick = () => {
       toggleGroup(true);
       toggleLeaderboard(!leaderboard);

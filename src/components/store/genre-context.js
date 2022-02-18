@@ -13,6 +13,10 @@ const GenreContext = createContext({
   changeUserId: (event) => {},
   changeUserName: (event) => {},
   changeRoomId: (event) => {},
+  setLoveIt: () => {},
+  setHateIt: () => {},
+  setProvider: () => {},
+  setLobbyLeft: () => {},
 });
 
 export function GenreContextProvider(props) {
@@ -22,6 +26,7 @@ export function GenreContextProvider(props) {
   const [userName, setUserName] = useState("");
   const [streamingProviderItems, setStreamingProvider] = useState([]);
   const [roomId, changeRoomId] = useState("");
+  const [lobbyLeft, changeLobbyLeft] = useState("true");
 
   const loveItHandler = (event) => {
     if (loveItItems.includes(event.target.name)) {
@@ -59,6 +64,9 @@ export function GenreContextProvider(props) {
   const roomIdHandler = (event) => {
     changeRoomId(event);
   };
+  const setLobby = (event) => {
+    changeLobbyLeft(event);
+  };
 
   const context = {
     loveIt: loveItItems,
@@ -67,12 +75,17 @@ export function GenreContextProvider(props) {
     userId: userId,
     userName: userName,
     roomId: roomId,
+    lobbyLeft: lobbyLeft,
     handleLoveIt: loveItHandler,
     handleHateIt: hateItHandler,
     handleStrProv: strProviderHandler,
     changeUserId: userIdHandler,
     changeUserName: userNameHandler,
     changeRoomId: roomIdHandler,
+    setLoveIt: setLoveIt,
+    setHateIt: setHateIt,
+    setProvider: setStreamingProvider,
+    setLobby: setLobby,
   };
   return (
     <GenreContext.Provider value={context}>

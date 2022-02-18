@@ -9,9 +9,11 @@ export default function UserInfo() {
   const [username, changeUsername] = useState("");
 
   useEffect(() => {
-    for (let i = 0; i < room?.users.length; i++) {
-      if (genreCtx.userId === room?.users[i].id)
-        changeUsername(room?.users[i].name);
+    if (room !== 0) {
+      for (let i = 0; i < room?.users.length; i++) {
+        if (genreCtx.userId === room?.users[i].id)
+          changeUsername(room?.users[i].name);
+      }
     }
     // eslint-disable-next-line
   }, [room?.users]);

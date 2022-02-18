@@ -11,9 +11,8 @@ export default function UserList() {
       </div>
       <div className="w-full text-2xl pt-4 text-white pl-12">
         <ul className="list-disc">
-          {room?.users.map((user, index) => (
-            <li key={index}>{user.name}</li>
-          ))}
+          {room !== 0 &&
+            room?.users.map((user, index) => <li key={index}>{user.name}</li>)}
         </ul>
       </div>
     </div>

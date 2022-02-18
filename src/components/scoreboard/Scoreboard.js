@@ -1,7 +1,6 @@
 import { useEffect, useContext } from "react";
 import ReactTooltip from "react-tooltip";
 import { RoomContext } from "../../contexts/roomContext";
-
 export default function Scoreboard(props) {
   const { room } = useContext(RoomContext);
 
