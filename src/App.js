@@ -6,27 +6,66 @@ import { RoomProvider } from "./contexts/roomContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Reconnect from "./components/roomInfo/Reconnect";
 import GenreContext from "./components/store/genre-context";
+import Landing from "./components/landing/Landing";
+
+import Create from "./components/landing/Create";
+import Join from "./components/landing/Join";
+import MainMenu from "./components/landing/MainMenu";
+import Logo from "./images/Logo.png";
 
 export default function App() {
-  const genreCtx = useContext(GenreContext);
-  return (
-    <div className="App">
-      <RoomProvider>
-        <BrowserRouter>
-          {localStorage.getItem("lastRoom") !== null &&
-          genreCtx.lobbyLeft === "true" ? (
-            <Routes>
-              <Route path="/*" element={<Reconnect />} />
-            </Routes>
-          ) : (
-            <Routes>
-              <Route path="/" element={<GetStarted />} />
-              <Route path="/setup/" element={<Setup />} />
-              <Route path="/swiper/" element={<LayoutMatcher />} />
-            </Routes>
-          )}
-        </BrowserRouter>
-      </RoomProvider>
-    </div>
-  );
+    const genreCtx = useContext(GenreContext);
+    /* return (
+        <div className="flex flex-col App">
+            <div className="m-auto">
+                <img className="w-full" src={Logo} alt="Logo" />
+
+                <BrowserRouter>
+                    <Routes>
+                        <Route exact path="/" element={<MainMenu />} />
+                        <Route exact path="/create" element={<Create />} />
+                        <Route exact path="/join" element={<Join />} />
+                    </Routes>
+                </BrowserRouter>
+            </div>
+        </div>
+    ); */
+
+    return (
+        <div className="App">
+            <RoomProvider>
+                <img className="w-1/2 " src={Logo} alt="Logo" />
+                <BrowserRouter>
+                    <Routes>
+                        <Route exact path="/" element={<MainMenu />} />
+                        <Route exact path="/create/" element={<Create />} />
+                        <Route exact path="/join/" element={<Join />} />
+                    </Routes>
+                </BrowserRouter>
+            </RoomProvider>
+        </div>
+    );
+    /* return (
+      <div className="App">
+          <RoomProvider>
+              <BrowserRouter>
+                  {localStorage.getItem("lastRoom") !== null &&
+                  genreCtx.lobbyLeft === "true" ? (
+                      <Routes>
+                          <Route path="/*" element={<Reconnect />} />
+                      </Routes>
+                  ) : (
+                      <Routes>
+                          <Route path="/" element={<Landing />} />
+                          <Route path="/setup/" element={<Setup />} />
+                          <Route
+                              path="/swiper/"
+                              element={<LayoutMatcher />}
+                          />
+                      </Routes>
+                  )}
+              </BrowserRouter>
+          </RoomProvider>
+      </div>
+  );  */
 }
