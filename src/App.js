@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import GetStarted from "./components/landing/GetStarted";
 import LayoutMatcher from "./components/layout/LayoutMatcher";
 import Setup from "./components/setup/Setup";
@@ -11,7 +11,8 @@ import Landing from "./components/landing/Landing";
 import Create from "./components/landing/Create";
 import Join from "./components/landing/Join";
 import MainMenu from "./components/landing/MainMenu";
-import Logo from "./images/Logo.png";
+import Logo from "./images/LogoNeu.png";
+import MenuField from "./components/landing/MenuField";
 
 export default function App() {
     const genreCtx = useContext(GenreContext);
@@ -33,16 +34,11 @@ export default function App() {
 
     return (
         <div className="App">
-            <RoomProvider>
-                <img className="w-1/2 " src={Logo} alt="Logo" />
-                <BrowserRouter>
-                    <Routes>
-                        <Route exact path="/" element={<MainMenu />} />
-                        <Route exact path="/create/" element={<Create />} />
-                        <Route exact path="/join/" element={<Join />} />
-                    </Routes>
-                </BrowserRouter>
-            </RoomProvider>
+            <div className="invert">
+                <img src={Logo} className="w-1/4 mx-auto" />
+            </div>
+
+            <MenuField />
         </div>
     );
     /* return (
